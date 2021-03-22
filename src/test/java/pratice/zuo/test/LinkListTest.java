@@ -1,0 +1,49 @@
+package pratice.zuo.test;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import pratice.zuo.test.LinkList.LinkNode;
+
+/**
+ * @author by catface
+ * @date 2021/3/22 5:26 下午
+ */
+@Slf4j
+public class LinkListTest {
+
+    @Test
+    public void testHaveRing() {
+        LinkNode<Integer> head = new LinkNode<>();
+        head.setValue(1);
+        LinkList<Integer> linkedList = new LinkList<>();
+        linkedList.setHead(head);
+
+        LinkNode<Integer> node2 = new LinkNode<>();
+        node2.setValue(2);
+        LinkNode<Integer> node3 = new LinkNode<>();
+        node3.setValue(3);
+        LinkNode<Integer> node4 = new LinkNode<>();
+        node4.setValue(4);
+        LinkNode<Integer> node5 = new LinkNode<>();
+        node5.setValue(5);
+        LinkNode<Integer> node6 = new LinkNode<>();
+        node6.setValue(6);
+
+        head.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
+        node4.setNext(node5);
+        //node5.setNext(node6);
+
+        LinkNode<Integer> midUpper = linkedList.midOrUpperNode();
+        log.info("中点or上边界:{}", midUpper.getValue());
+
+        LinkNode<Integer> midDown = linkedList.midOrDown();
+        log.info("中点or下边界:{}", midDown.getValue());
+
+        boolean haveRing = linkedList.haveRing();
+        log.info("是否有环:{}", haveRing);
+
+    }
+
+}
