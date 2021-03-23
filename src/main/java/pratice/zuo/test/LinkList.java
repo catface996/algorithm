@@ -66,6 +66,30 @@ public class LinkList<T> {
         return false;
     }
 
+    public LinkNode<T> findFirstEnterRingNode() {
+        if (head == null || head.next == null || head.next.next == null) {
+            return null;
+        }
+        if (head.next == head) {
+            return head;
+        }
+        LinkNode<T> fastPoint = head;
+        LinkNode<T> slowPoint = head;
+        while (fastPoint.next != null && fastPoint.next.next != null) {
+            fastPoint = fastPoint.next.next;
+            slowPoint = slowPoint.next;
+            if (fastPoint == slowPoint) {
+                fastPoint = head;
+                while (fastPoint != slowPoint) {
+                    fastPoint = fastPoint.next;
+                    slowPoint = slowPoint.next;
+                }
+                return fastPoint;
+            }
+        }
+        return null;
+    }
+
     public static class LinkNode<T> {
         private T value;
         private LinkNode<T> next;
