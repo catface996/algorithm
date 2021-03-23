@@ -87,11 +87,17 @@ public class LinkList<T> {
         n = Math.abs(n);
         // 长度大的链表一,首先遍历n次
         while (n != 0) {
+            if (currentNode1 == null) {
+                return null;
+            }
             n--;
             currentNode1 = currentNode1.next;
         }
         // 长度大的链表遍历n次后,此时两条链表
         while (currentNode1 != currentNode2) {
+            if (currentNode1 == null || currentNode2 == null) {
+                return null;
+            }
             currentNode1 = currentNode1.next;
             currentNode2 = currentNode2.next;
         }
@@ -254,6 +260,16 @@ public class LinkList<T> {
 
         public void setNext(LinkNode<T> next) {
             this.next = next;
+        }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return this == o;
         }
     }
 }
