@@ -17,6 +17,7 @@ public class FullBinaryTree {
 
     public static TravelInfo processTravel(Node x) {
         if (x == null) {
+
             return new TravelInfo(0, 0);
         }
         TravelInfo leftInfo = processTravel(x.left);
