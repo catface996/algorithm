@@ -23,22 +23,22 @@ public class Solution2 {
         return getNum(root);
     }
 
-    public int getH(TreeNode x) {
+    public int getHeight(TreeNode x) {
         if (x == null) {
             return 0;
         }
-        return getH(x.left) + 1;
+        return getHeight(x.left) + 1;
     }
 
     /**
      * 如果getNum的复杂度是x,则 x = logN + x/2
      * <p>
-     * 因为子树的规模是父亲节点的一一半,所以复杂度是一半
+     * 因为子树的规模是父亲节点的一半,所以复杂度是一半
      * <p>
-     * x = 2logN ,顾略掉常数项 O(logN)
+     * x = 2logN ,忽略掉常数项 O(logN)
      *
-     * @param x
-     * @return
+     * @param x 当前待处理节点
+     * @return 以x为根节点的完全二叉树节点个数
      */
     public int getNum(TreeNode x) {
         if (x == null) {
@@ -47,17 +47,19 @@ public class Solution2 {
         if (x.left == null && x.right == null) {
             return 1;
         }
-        int h = getH(x);
-        int rightSubH = getH(x.right);
+        // 获取高度复杂度为O(logN)
+        int h = getHeight(x);
+        int rightSubH = getHeight(x.right);
         if (rightSubH + 1 == h) {
             int leftNum = (int)Math.pow(2, h - 1) - 1;
             int rightNum = getNum(x.right);
             return leftNum + 1 + rightNum;
-        } else {
-            int leftNum = getNum(x.left);
-            int rightNum = (int)Math.pow(2, rightSubH) - 1;
-            return leftNum + 1 + rightNum;
         }
+
+        int leftNum = getNum(x.left);
+        int rightNum = (int)Math.pow(2, rightSubH) - 1;
+        return leftNum + 1 + rightNum;
+
     }
 
     public static class TreeNode {
