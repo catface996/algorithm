@@ -68,10 +68,10 @@ public class Solution2 {
 
     public int process(TreeNode x) {
         /*
-        5:56 下午	info
+        8:04 下午	info
 				解答成功:
-				执行耗时:1 ms,击败了48.44% 的Java用户
-				内存消耗:38.2 MB,击败了94.26% 的Java用户
+				执行耗时:0 ms,击败了100.00% 的Java用户
+				内存消耗:38.4 MB,击败了77.20% 的Java用户
          */
         if (x == null) {
             return 0;
@@ -80,10 +80,8 @@ public class Solution2 {
         int leftValSum = process(x.left);
         int rightValSum = process(x.right);
 
-        // 坡度
-        int slope = Math.abs(leftValSum - rightValSum);
-        // 坡度和
-        slopeSum += slope;
+        // 坡度累计
+        slopeSum += Math.abs(leftValSum - rightValSum);;
         // 节点值的和
         return x.val + leftValSum + rightValSum;
     }
