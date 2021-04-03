@@ -70,11 +70,11 @@ package pratice.zuo.test.树.P623在二叉树中增加一行;
 //leetcode submit region begin(Prohibit modification and deletion)
 public class Solution {
 
-    int depth;
+    int depthParent;
     int v;
 
     public TreeNode addOneRow(TreeNode root, int val, int depth) {
-        this.depth = depth - 1;
+        this.depthParent = depth - 1;
         this.v = val;
         if (depth == 1) {
             TreeNode newRoot = new TreeNode(val);
@@ -96,7 +96,7 @@ public class Solution {
             return;
         }
 
-        if (currentDepth == depth) {
+        if (currentDepth == depthParent) {
             x.left = new TreeNode(v, x.left, null);
             x.right = new TreeNode(v, null, x.right);
             return;
