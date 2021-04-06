@@ -1,4 +1,4 @@
-package pratice.zuo.test.排序.P56合并区间;
+package pratice.leetcode.排序.P56合并区间;
 
 //以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返
 //回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
@@ -36,13 +36,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution3 {
+class Solution3_3 {
 
     /*
-        4:36 下午	info
+   5:19 下午	info
 				解答成功:
-				执行耗时:3 ms,击败了98.53% 的Java用户
-				内存消耗:40.7 MB,击败了97.29% 的Java用户
+				执行耗时:2 ms,击败了99.39% 的Java用户
+				内存消耗:40.9 MB,击败了89.09% 的Java用户
      */
     public int[][] merge(int[][] intervals) {
         if (intervals == null || intervals.length <= 0) {
@@ -64,35 +64,31 @@ class Solution3 {
     }
 
     public int[][] bucketSort(int[][] intervals) {
+        boolean containZeroZero = false;
         int maxStart = 0;
         for (int[] ints : intervals) {
             maxStart = Math.max(maxStart, ints[0]);
         }
-        Bucket[] bucketList = new Bucket[maxStart + 1];
+        int[] bucketArr = new int[maxStart + 1];
         for (int[] interval : intervals) {
-            Bucket bucket = bucketList[interval[0]];
-            if (bucket == null) {
-                bucket = new Bucket();
-                bucketList[interval[0]] = bucket;
+            if (interval[0] == 0 && interval[1] == 0) {
+                containZeroZero = true;
             }
-            bucket.intervals.add(interval);
+            bucketArr[interval[0]] = Math.max(bucketArr[interval[0]], interval[1]);
         }
         int[][] newIntervals = new int[intervals.length][2];
         int currentIndex = 0;
-        for (Bucket bucket : bucketList) {
-            if (bucket == null) {
+        if (containZeroZero) {
+            newIntervals[0] = new int[] {0, 0};
+            currentIndex++;
+        }
+        for (int i = 0; i < bucketArr.length; i++) {
+            if (bucketArr[i] == 0) {
                 continue;
             }
-            for (int[] anInt : bucket.intervals) {
-                newIntervals[currentIndex] = anInt;
-                currentIndex++;
-            }
+            newIntervals[currentIndex++] = new int[] {i, bucketArr[i]};
         }
         return newIntervals;
-    }
-
-    public static class Bucket {
-        List<int[]> intervals = new ArrayList<>();
     }
 
     public static class Test1 {
@@ -100,7 +96,7 @@ class Solution3 {
         // 1,11  15,18
         public static void main(String[] args) {
             int[][] intervals = new int[][] {{1, 3}, {4, 6}, {3, 6}, {5, 6}, {15, 18}, {6, 11}};
-            Solution3 solution = new Solution3();
+            Solution3_3 solution = new Solution3_3();
             int[][] temp = solution.merge(intervals);
             System.out.println(temp);
         }
@@ -111,7 +107,7 @@ class Solution3 {
         // 1,4
         public static void main(String[] args) {
             int[][] intervals = new int[][] {{1, 4}, {2, 3}};
-            Solution3 solution = new Solution3();
+            Solution3_3 solution = new Solution3_3();
             int[][] temp = solution.merge(intervals);
             System.out.println(temp);
         }
@@ -122,7 +118,7 @@ class Solution3 {
         //0,5
         public static void main(String[] args) {
             int[][] intervals = new int[][] {{1, 4}, {0, 5}};
-            Solution3 solution = new Solution3();
+            Solution3_3 solution = new Solution3_3();
             int[][] temp = solution.merge(intervals);
             System.out.println(temp);
         }
@@ -133,7 +129,7 @@ class Solution3 {
         //期望结果:[[1,10]]
         public static void main(String[] args) {
             int[][] intervals = new int[][] {{2, 3}, {4, 5}, {6, 7}, {8, 9}, {1, 10}};
-            Solution3 solution = new Solution3();
+            Solution3_3 solution = new Solution3_3();
             int[][] temp = solution.merge(intervals);
             System.out.println(temp);
         }
@@ -144,7 +140,7 @@ class Solution3 {
         //期望结果:[[0,3],[4,6]]
         public static void main(String[] args) {
             int[][] intervals = new int[][] {{1, 3}, {0, 2}, {2, 3}, {4, 6}, {4, 5}, {5, 5}, {0, 2}, {3, 3}};
-            Solution3 solution = new Solution3();
+            Solution3_3 solution = new Solution3_3();
             int[][] temp = solution.merge(intervals);
             System.out.println(temp);
         }
@@ -155,7 +151,18 @@ class Solution3 {
         //期望结果:[[0,5]]
         public static void main(String[] args) {
             int[][] intervals = new int[][] {{4, 5}, {1, 4}, {0, 1}};
-            Solution3 solution = new Solution3();
+            Solution3_3 solution = new Solution3_3();
+            int[][] temp = solution.merge(intervals);
+            System.out.println(temp);
+        }
+    }
+
+    public static class Test7 {
+        //测试用例:[[1,4],[0,0]]
+        //期望结果:[[0,0],[1,4]]
+        public static void main(String[] args) {
+            int[][] intervals = new int[][] {{1, 4}, {0, 0}};
+            Solution3_3 solution = new Solution3_3();
             int[][] temp = solution.merge(intervals);
             System.out.println(temp);
         }
