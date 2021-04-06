@@ -32,51 +32,41 @@ package pratice.zuo.test.排序.P56合并区间;
 // Related Topics 排序 数组
 // 👍 882 👎 0
 
+import java.util.ArrayList;
+import java.util.List;
+
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution2 {
 
     /*
-    3:33 下午	info
+        4:41 下午	info
 				解答成功:
-				执行耗时:373 ms,击败了5.30% 的Java用户
-				内存消耗:41.4 MB,击败了15.29% 的Java用户
+				执行耗时:324 ms,击败了5.30% 的Java用户
+				内存消耗:41 MB,击败了78.14% 的Java用户
      */
     public int[][] merge(int[][] intervals) {
         if (intervals == null || intervals.length <= 0) {
             return new int[0][2];
         }
-        int[][] temp = new int[intervals.length][2];
-        int ansNum = 0;
         bubbleSort(intervals);
-        int minStart = intervals[0][0];
-        int maxEnd = intervals[0][1];
+        List<int[]> merged = new ArrayList<>();
+        int[] currentMerge = intervals[0];
+        merged.add(currentMerge);
         for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] > maxEnd) {
-                temp[ansNum][0] = minStart;
-                temp[ansNum][1] = maxEnd;
-                minStart = intervals[i][0];
-                ansNum++;
+            if (intervals[i][0] > currentMerge[1]) {
+                currentMerge = intervals[i];
+                merged.add(currentMerge);
+            } else {
+                currentMerge[1] = Math.max(currentMerge[1], intervals[i][1]);
             }
-            maxEnd = Math.max(maxEnd, intervals[i][1]);
         }
-        temp[ansNum][0] = minStart;
-        temp[ansNum][1] = maxEnd;
-        ansNum++;
-        int[][] realAns = new int[ansNum][2];
-        System.arraycopy(temp, 0, realAns, 0, ansNum);
-        return realAns;
+        return merged.toArray(new int[merged.size()][]);
     }
 
     public void bubbleSort(int[][] intervals) {
         for (int i = 0; i < intervals.length; i++) {
             for (int j = 0; j < intervals.length - i - 1; j++) {
                 if (intervals[j][0] > intervals[j + 1][0]) {
-                    int[] temp = intervals[j];
-                    intervals[j] = intervals[j + 1];
-                    intervals[j + 1] = temp;
-                    continue;
-                }
-                if (intervals[j][0] == intervals[j + 1][0] && intervals[j][1] < intervals[j + 1][1]) {
                     int[] temp = intervals[j];
                     intervals[j] = intervals[j + 1];
                     intervals[j + 1] = temp;
