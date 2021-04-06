@@ -1,9 +1,9 @@
-package pratice.zuo.test;
+package pratice.zuo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import pratice.zuo.test.other.Trie;
-import pratice.zuo.test.other.Trie.Tree;
+import pratice.zuo.other.Trie;
+import pratice.zuo.other.Trie.Tree;
 
 /**
  * @author by catface

@@ -1,9 +1,9 @@
-package pratice.zuo.test;
+package pratice.zuo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import pratice.zuo.test.other.LinkList;
-import pratice.zuo.test.other.LinkList.LinkNode;
+import pratice.zuo.other.LinkList;
+import pratice.zuo.other.LinkList.LinkNode;
 
 /**
  * @author by catface
