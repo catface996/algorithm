@@ -1,7 +1,8 @@
 package pratice.zuo.test;
 
 import org.junit.Test;
-import pratice.zuo.test.BinaryTree.Node;
+import pratice.zuo.test.other.BinaryTree;
+import pratice.zuo.test.other.BinaryTree.Node;
 
 /**
  * @author by catface
