@@ -2,7 +2,7 @@ package pratice;
 
 import java.util.Random;
 
-import pratice.zuo.test.BubbleSort;
+import pratice.zuo.test.other.BubbleSort;
 
 /**
  * @author by catface
