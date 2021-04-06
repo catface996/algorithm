@@ -1,4 +1,4 @@
-package pratice.zuo.test;
+package pratice.zuo.test.other;
 
 import java.util.PriorityQueue;
 

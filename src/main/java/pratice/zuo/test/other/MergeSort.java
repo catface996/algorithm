@@ -1,4 +1,4 @@
-package pratice.zuo.test;
+package pratice.zuo.test.other;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -174,7 +174,6 @@ public class MergeSort {
 				}
 				break;
 			}
-
 		}
 
 		// 已对部分数组归并完成,复制到原始数组中

@@ -1,4 +1,4 @@
-package pratice.zuo.test;
+package pratice.zuo.test.other;
 
 /**
  * @author by catface
