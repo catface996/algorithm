@@ -67,35 +67,6 @@ class Solution2 {
         quick1(numStrArr, j + 1, r);
     }
 
-    public void quick2(String[] numStrArr, int l, int r) {
-        if (l >= r) { return; }
-        int i = l, j = r;
-        String x = numStrArr[(l + r) >> 1];
-        while (i < j) {
-
-            // 如果是使用while在前, 当条件不满足时,i不会++,j不会--,进入死循环,需要在开始时做++和--
-            while ((numStrArr[i] + x).compareTo(x + numStrArr[i]) < 0) {
-                i++;
-            }
-
-            while ((numStrArr[j] + x).compareTo(x + numStrArr[j]) > 0) {
-                j--;
-            }
-
-            // 发生交换,i++,j--,
-            if (i < j) {
-                String temp = numStrArr[i];
-                numStrArr[i] = numStrArr[j];
-                numStrArr[j] = temp;
-                i++;
-                j--;
-            }
-        }
-        // i 和 j 均可
-        quick2(numStrArr, l, j);
-        quick2(numStrArr, j + 1, r);
-    }
-
     void quick3(String[] strs, int l, int r) {
         if (l >= r) { return; }
         int i = l, j = r;
@@ -157,7 +128,6 @@ class Solution2 {
             String[] strArr2 = Arrays.copyOf(strArr1, strArr1.length);
             String[] strArr3 = Arrays.copyOf(strArr1, strArr1.length);
             solution.quick1(strArr1, 0, strArr1.length - 1);
-            solution.quick2(strArr2, 0, strArr2.length - 1);
             solution.quick3(strArr3, 0, strArr3.length - 1);
             System.out.println("");
         }
@@ -176,7 +146,6 @@ class Solution2 {
             String[] strArr2 = Arrays.copyOf(strArr1, strArr1.length);
             String[] strArr3 = Arrays.copyOf(strArr1, strArr1.length);
             solution.quick1(strArr1, 0, strArr1.length - 1);//
-            solution.quick2(strArr2, 0, strArr2.length - 1);//
             solution.quick3(strArr3, 0, strArr3.length - 1); //
             System.out.println("");
         }
@@ -195,7 +164,6 @@ class Solution2 {
             String[] strArr2 = Arrays.copyOf(strArr1, strArr1.length);
             String[] strArr3 = Arrays.copyOf(strArr1, strArr1.length);
             solution.quick1(strArr1, 0, strArr1.length - 1);
-            solution.quick2(strArr2, 0, strArr2.length - 1);
             solution.quick3(strArr3, 0, strArr3.length - 1);
             System.out.println("");
         }

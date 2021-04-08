@@ -22,7 +22,6 @@ import java.util.Arrays;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution4 {
 
-
     public int[] smallestK(int[] arr, int k) {
         qks(0, arr.length - 1, k, arr);
         return Arrays.copyOf(arr, k);
@@ -59,8 +58,12 @@ class Solution4 {
     private int partition(int l, int r, int[] a) {
         int i = l - 1, j = r + 1, x = a[(l + r) >> 1];
         while (i < j) {
-            do { i++; } while (a[i] < x);
-            do { j--; } while (a[j] > x);
+            do {
+                i++;
+            } while (a[i] < x);
+            do {
+                j--;
+            } while (a[j] > x);
             if (i < j) {
                 a[i] = a[i] ^ a[j];
                 a[j] = a[i] ^ a[j];
@@ -76,6 +79,16 @@ class Solution4 {
             int[] arr = new int[] {1, 3, 6, 9, 7, 3, 0, 12, 56, 3};
             Solution4 solution = new Solution4();
             int[] ans = solution.smallestK(arr, 4);
+            System.out.println(ans);
+        }
+    }
+
+    public static class Test2 {
+
+        public static void main(String[] args) {
+            int[] arr = new int[] {1, 1, 1, 1, 1};
+            Solution4 solution = new Solution4();
+            int[] ans = solution.smallestK(arr, 2);
             System.out.println(ans);
         }
     }
