@@ -27,7 +27,7 @@ import org.junit.Test;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 @Slf4j
-public class Solution {
+public class Solution2 {
 
     public int bestSeqAtIndex(int[] height, int[] weight) {
         List<Person> people = convertPerson(height, weight);
@@ -54,35 +54,7 @@ public class Solution {
         return personArr;
     }
 
-    /**
-     * 最长增长序列
-     *
-     * @param nums 体重数组
-     * @return 最长增增序列长度
-     */
     public int lengthOfLIS(int[] nums) {
-        if (nums == null) {
-            return 0;
-        }
-        int[] dp = new int[nums.length];
-        dp[0] = 1;
-        int maxLength = 1;
-        for (int cur = 1; cur < nums.length; cur++) {
-            int dpMax = 0;
-            for (int i = 0; i < cur; i++) {
-                int curValue = nums[cur];
-                if (nums[i] < curValue) {
-                    dpMax = Math.max(dpMax, dp[i]);
-                }
-            }
-            dpMax++;
-            dp[cur] = dpMax;
-            maxLength = Math.max(maxLength, dpMax);
-        }
-        return maxLength;
-    }
-
-    public int lengthOfLIS2(int[] nums) {
         int len = 1, n = nums.length;
         if (n == 0) {
             return 0;
@@ -130,7 +102,7 @@ public class Solution {
         public void test1() {
             int[] height = new int[] {65, 70, 56, 75, 60, 68};
             int[] weight = new int[] {100, 150, 90, 190, 95, 110};
-            Solution solution = new Solution();
+            Solution2 solution = new Solution2();
             int maxLevel = solution.bestSeqAtIndex(height, weight);
             System.out.println("最大层高:" + maxLevel);
         }
@@ -139,7 +111,7 @@ public class Solution {
         public void test2() {
             int[] height = new int[] {1, 2, 3, 4};
             int[] weight = new int[] {4, 3, 2, 1};
-            Solution solution = new Solution();
+            Solution2 solution = new Solution2();
             int maxLevel = solution.bestSeqAtIndex(height, weight);
             System.out.println("最大层高:" + maxLevel);
         }
@@ -148,7 +120,7 @@ public class Solution {
         public void test3() {
             int[] height = new int[] {8378, 8535, 8998, 3766, 648, 6184, 5506, 5648, 3907, 6773};
             int[] weight = new int[] {9644, 849, 3232, 3259, 5229, 314, 5593, 9600, 6695, 4340};
-            Solution solution = new Solution();
+            Solution2 solution = new Solution2();
             int maxLevel = solution.bestSeqAtIndex(height, weight);
             System.out.println("最大层高:" + maxLevel);
         }
