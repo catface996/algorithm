@@ -8,15 +8,15 @@ import java.util.LinkedList;
  */
 public class CompleteBinaryTree {
 
-    public static boolean isCBT1(Node head) {
+    public static boolean isCBT1(TreeNode head) {
         if (head == null) {
             return true;
         }
-        LinkedList<Node> queue = new LinkedList<>();
+        LinkedList<TreeNode> queue = new LinkedList<>();
         // 是否遇到过左右两个孩子不双全的节点
         boolean leaf = false;
-        Node l = null;
-        Node r = null;
+        TreeNode l = null;
+        TreeNode r = null;
         queue.add(head);
         while (!queue.isEmpty()) {
             head = queue.poll();
@@ -44,14 +44,14 @@ public class CompleteBinaryTree {
         return true;
     }
 
-    public static boolean isCompleteBinaryTree(Node head) {
+    public static boolean isCompleteBinaryTree(TreeNode head) {
         if (head == null) {
             return true;
         }
         return processComplete(head).complete;
     }
 
-    public static Info processComplete(Node x) {
+    public static Info processComplete(TreeNode x) {
         if (x == null) {
             return new Info(true, true, 0);
         }
@@ -76,16 +76,16 @@ public class CompleteBinaryTree {
     }
 
     // for test
-    public static Node generateRandomBST(int maxLevel, int maxValue) {
+    public static TreeNode generateRandomBST(int maxLevel, int maxValue) {
         return generate(1, maxLevel, maxValue);
     }
 
     // for test
-    public static Node generate(int level, int maxLevel, int maxValue) {
+    public static TreeNode generate(int level, int maxLevel, int maxValue) {
         if (level > maxLevel || Math.random() < 0.5) {
             return null;
         }
-        Node head = new Node((int)(Math.random() * maxValue));
+        TreeNode head = new TreeNode((int)(Math.random() * maxValue));
         head.left = generate(level + 1, maxLevel, maxValue);
         head.right = generate(level + 1, maxLevel, maxValue);
         return head;
@@ -96,7 +96,7 @@ public class CompleteBinaryTree {
         int maxValue = 100;
         int testTimes = 1000000;
         for (int i = 0; i < testTimes; i++) {
-            Node head = generateRandomBST(maxLevel, maxValue);
+            TreeNode head = generateRandomBST(maxLevel, maxValue);
             if (isCBT1(head) != isCompleteBinaryTree(head)) {
                 System.out.println("Oops!");
             }
@@ -104,12 +104,12 @@ public class CompleteBinaryTree {
         System.out.println("finish!");
     }
 
-    public static class Node {
+    public static class TreeNode {
         public int value;
-        public Node left;
-        public Node right;
+        public TreeNode left;
+        public TreeNode right;
 
-        public Node(int data) {
+        public TreeNode(int data) {
             this.value = data;
         }
     }
