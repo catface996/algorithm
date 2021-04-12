@@ -60,25 +60,30 @@ public class SolutionUseDp {
         int[] dp = new int[numberStr.length() + 1];
         dp[numberStr.length()] = 1;
 
-        for (int currentIndex = numberStr.length() - 1; currentIndex >= 0; currentIndex--) {
+        // 先填充最后两位
+        char currentChar = numberStr.charAt(numberStr.length() - 1);
+        if (currentChar == ZERO) {
+            dp[numberStr.length() - 1] = 0;
+        } else {
+            dp[numberStr.length() - 1] = dp[numberStr.length()];
+        }
 
-            char currentChar = numberStr.charAt(currentIndex);
+        // 填充剩余
+        for (int currentIndex = numberStr.length() - 2; currentIndex >= 0; currentIndex--) {
+            currentChar = numberStr.charAt(currentIndex);
             if (currentChar == ZERO) {
                 dp[currentIndex] = 0;
-                continue;
-            }
-
-            // 选择当前位置的数字转换成字符
-            int ans = dp[currentIndex + 1];
-            // 不选择当前数字转字符,选当前两位
-            // 取当前数字,如果当前数字非0,可以转换成字母
-            if (currentIndex + 1 < numberStr.length()) {
+            }else{
+                // 选择当前位置的数字转换成字符
+                int ans = dp[currentIndex + 1];
+                // 不选择当前数字转字符,选当前两位
+                // 取当前数字,如果当前数字非0,可以转换成字母
                 char nextChar = numberStr.charAt(currentIndex + 1);
                 if ((currentChar - ZERO) * 10 + (nextChar - ZERO) <= 26) {
                     ans += dp[currentIndex + 2];
                 }
+                dp[currentIndex] = ans;
             }
-            dp[currentIndex] = ans;
         }
         return dp[0];
     }
