@@ -33,20 +33,28 @@ public class Solution {
     private int process(String str1, int start1, String str2, int start2) {
 
         // 两个字符串中的任何一个已遍历结束,另外一个未结束,公共子序列长度为0
-        if (start1 == str1.length() && start2 <= str2.length() - 1) {
-            return 0;
-        }
-        if (start1 <= str1.length() && start2 == str2.length() - 1) {
-            return 0;
+        if (start1 == str1.length() - 1 && start2 == str2.length() - 1) {
+            return 1;
         }
 
-        int maxLength = 0;
+        if (start1 == str1.length() - 1 && start2 < str2.length() - 1) {
+            if (str1.charAt(start1) == str2.charAt(start2)) {
+                return 1;
+            }
+            return process(str1, start1, str2, start2 + 1);
+        }
+
+        if (start1 < str1.length() - 1 && start2 == str2.length() - 1) {
+            if (str1.charAt(start1) == str2.charAt(start2)) {
+                return 1;
+            }
+            return process(str1, start1 + 1, str2, start2);
+        }
+
         // 第一个字符选不保留前位置,第二个字符串保留当前位置
-        maxLength = Math.max(maxLength, process(str1, start1 + 1, str2, start2));
+        int maxLength = process(str1, start1 + 1, str2, start2);
         // 第一个字符串保留当前位置,第二个字符串不保留当前位置
         maxLength = Math.max(maxLength, process(str1, start1, str2, start2 + 1));
-        // 第一个字符串和第二个字符串均不保留当前位置
-        maxLength = Math.max(maxLength, process(str1, start1 + 1, str2, start2 + 1));
         // 第一个字符串和第二个字符串均保留当前位置,且当前位置字符串相同
         if (str1.charAt(start1) == str2.charAt(start2)) {
             maxLength = Math.max(maxLength, 1 + process(str1, start1 + 1, str2, start2 + 1));
@@ -77,5 +85,16 @@ public class Solution {
             System.out.println(maxLength);
             assert maxLength == 6;
         }
+
+        @Test
+        public void test3() {
+            String str1 = "12376321";
+            String str2 = "12367321";
+            Solution solution = new Solution();
+            int maxLength = solution.maxCommonSubSeq(str1, str2);
+            System.out.println(maxLength);
+            assert maxLength == 7;
+        }
+
     }
 }

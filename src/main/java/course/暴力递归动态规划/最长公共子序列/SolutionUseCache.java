@@ -39,28 +39,37 @@ public class SolutionUseCache {
     private int process(String str1, int start1, String str2, int start2, int[][] cache) {
 
         // 两个字符串中的任何一个已遍历结束,另外一个未结束,公共子序列长度为0
-        if (start1 == str1.length() && start2 <= str2.length() - 1) {
-            return 0;
+        if (start1 == str1.length() - 1 && start2 == str2.length() - 1) {
+            return 1;
         }
-        if (start1 <= str1.length() && start2 == str2.length() - 1) {
-            return 0;
+
+        int ans = cache[start1][start2];
+        if (ans != -1) {
+            return ans;
         }
-        if (cache[start1][start2] != -1) {
-            // 命中缓存
-            return cache[start1][start2];
+
+        if (start1 == str1.length() - 1 && start2 < str2.length() - 1) {
+            if (str1.charAt(start1) == str2.charAt(start2)) {
+                return 1;
+            }
+            return process(str1, start1, str2, start2 + 1, cache);
         }
-        int maxLength = 0;
+
+        if (start1 < str1.length() - 1 && start2 == str2.length() - 1) {
+            if (str1.charAt(start1) == str2.charAt(start2)) {
+                return 1;
+            }
+            return process(str1, start1 + 1, str2, start2, cache);
+        }
+
         // 第一个字符选不保留前位置,第二个字符串保留当前位置
-        maxLength = Math.max(maxLength, process(str1, start1 + 1, str2, start2, cache));
+        int maxLength = process(str1, start1 + 1, str2, start2, cache);
         // 第一个字符串保留当前位置,第二个字符串不保留当前位置
         maxLength = Math.max(maxLength, process(str1, start1, str2, start2 + 1, cache));
-        // 第一个字符串和第二个字符串均不保留当前位置
-        maxLength = Math.max(maxLength, process(str1, start1 + 1, str2, start2 + 1, cache));
         // 第一个字符串和第二个字符串均保留当前位置,且当前位置字符串相同
         if (str1.charAt(start1) == str2.charAt(start2)) {
             maxLength = Math.max(maxLength, 1 + process(str1, start1 + 1, str2, start2 + 1, cache));
         }
-        cache[start1][start2] = maxLength;
         return maxLength;
     }
 
@@ -86,6 +95,16 @@ public class SolutionUseCache {
             int maxLength = solution.maxCommonSubSeq(str1, str2);
             System.out.println(maxLength);
             assert maxLength == 6;
+        }
+
+        @Test
+        public void test3() {
+            String str1 = "12376321";
+            String str2 = "12367321";
+            SolutionUseCache solution = new SolutionUseCache();
+            int maxLength = solution.maxCommonSubSeq(str1, str2);
+            System.out.println(maxLength);
+            assert maxLength == 7;
         }
     }
 }

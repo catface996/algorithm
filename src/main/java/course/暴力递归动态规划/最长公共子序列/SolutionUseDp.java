@@ -111,12 +111,22 @@ public class SolutionUseDp {
         //最长公共子序列是“123456”，所以返回长度6
         @Test
         public void test2() {
-            String str1 = "a12b3c456d";
-            String str2 = "1ef23ghi4j56k";
+            String str1 = "a12b3c43def2ghi1kpm";
+            String str2 = "mpk1ihg2fed34c3b21a";
             SolutionUseDp solution = new SolutionUseDp();
             int maxLength = solution.maxCommonSubSeq(str1, str2);
             System.out.println(maxLength);
-            assert maxLength == 6;
+            assert maxLength == 7;
+        }
+
+        @Test
+        public void test3() {
+            String str1 = "12376321";
+            String str2 = "12367321";
+            SolutionUseDp solution = new SolutionUseDp();
+            int maxLength = solution.maxCommonSubSeq(str1, str2);
+            System.out.println(maxLength);
+            assert maxLength == 7;
         }
     }
 }
