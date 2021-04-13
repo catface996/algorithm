@@ -70,20 +70,18 @@ public class SolutionUseDp {
 
         int[][] dp = new int[str1.length() + 1][str2.length() + 1];
         // 两个字符串中的任何一个已遍历结束,另外一个未结束,公共子序列长度为0
-        for (int i = 0; i <= str2.length(); i++) {
-            dp[str1.length()][i] = 0;
-        }
-        for (int i = 0; i <= str1.length(); i++) {
-            dp[i][str2.length()] = 0;
-        }
-
+        // 默认以初始化为0
+        //for (int i = 0; i <= str2.length(); i++) {
+        //    dp[str1.length()][i] = 0;
+        //}
+        //for (int i = 0; i <= str1.length(); i++) {
+        //    dp[i][str2.length()] = 0;
+        //}
         for (int start1 = str1.length() - 1; start1 >= 0; start1--) {
             for (int start2 = str2.length() - 1; start2 >= 0; start2--) {
-                int maxLength = 0;
                 // 第一个字符选不保留前位置,第二个字符串保留当前位置
-                maxLength = Math.max(maxLength, dp[start1 + 1][start2]);
+                int maxLength = Math.max(dp[start1 + 1][start2], dp[start1][start2 + 1]);
                 // 第一个字符串保留当前位置,第二个字符串不保留当前位置
-                maxLength = Math.max(maxLength, dp[start1][start2 + 1]);
                 // 第一个字符串和第二个字符串均保留当前位置,且当前位置字符串相同
                 if (str1.charAt(start1) == str2.charAt(start2)) {
                     maxLength = Math.max(maxLength, 1 + dp[start1 + 1][start2 + 1]);
@@ -128,5 +126,6 @@ public class SolutionUseDp {
             System.out.println(maxLength);
             assert maxLength == 7;
         }
+
     }
 }
