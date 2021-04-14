@@ -2,7 +2,7 @@ package util;
 
 import java.util.Random;
 
-import course.BubbleSort;
+import course.排序.BubbleSort;
 
 /**
  * @author by catface
@@ -19,6 +19,14 @@ public class ArrayUtil {
             tempArray[i] = tempNum;
         }
         return tempArray;
+    }
+
+    public static int[][] randomMatrix(int rows, int cols, int minNum, int maxNum) {
+        int[][] matrix = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            matrix[i] = randomIntArray(cols, minNum, maxNum);
+        }
+        return matrix;
     }
 
     public static Integer[] randomIntegerArray(int size, int minNum, int maxNum) {
