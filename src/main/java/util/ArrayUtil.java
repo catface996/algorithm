@@ -1,5 +1,6 @@
 package util;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import course.排序.BubbleSort;
@@ -27,6 +28,16 @@ public class ArrayUtil {
             matrix[i] = randomIntArray(cols, minNum, maxNum);
         }
         return matrix;
+    }
+
+    public static int[][] initCache(int rows, int cols, int initValue) {
+        int[][] cache = new int[rows][];
+        for (int i = 0; i < rows; i++) {
+            int[] rowArr = new int[cols];
+            Arrays.fill(rowArr, initValue);
+            cache[i] = rowArr;
+        }
+        return cache;
     }
 
     public static Integer[] randomIntegerArray(int size, int minNum, int maxNum) {
