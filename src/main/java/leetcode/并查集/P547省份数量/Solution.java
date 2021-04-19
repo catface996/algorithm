@@ -6,6 +6,11 @@ package leetcode.并查集.P547省份数量;
  */
 public class Solution {
 
+    //3:22 下午	info
+    //				解答成功:
+    //				执行耗时:1 ms,击败了100.00% 的Java用户
+    //				内存消耗:39.4 MB,击败了56.13% 的Java用户
+
     public static int findCircleNum(int[][] isConnected) {
         if (isConnected == null || isConnected.length <= 0) {
             return 0;
@@ -28,13 +33,6 @@ public class Solution {
          * parent[i]=k,表达的含义是,k是i的父亲
          */
         private int[] parent;
-
-        /**
-         * size[i]=k,如果i代表节点,size[i]才有意义,否则无意义
-         * <p>
-         * i所在的集合大小是多少
-         */
-        private int[] size;
         /**
          * 辅助结构
          */
@@ -46,12 +44,10 @@ public class Solution {
 
         public UnionFind(int n) {
             parent = new int[n];
-            size = new int[n];
             help = new int[n];
             sets = n;
             for (int i = 0; i < n; i++) {
                 parent[i] = i;
-                size[i] = 1;
             }
         }
 
@@ -82,11 +78,9 @@ public class Solution {
             int jRootParent = find(j);
             // 两相邻节点的最父级节点不是同一个,表明两相邻节点不在同一个集合
             if (iRootParent != jRootParent) {
-                if (size[iRootParent] >= size[jRootParent]) {
-                    size[iRootParent] += size[jRootParent];
+                if (iRootParent <= jRootParent) {
                     parent[jRootParent] = iRootParent;
                 } else {
-                    size[jRootParent] += size[iRootParent];
                     parent[iRootParent] = jRootParent;
                 }
                 sets--;
