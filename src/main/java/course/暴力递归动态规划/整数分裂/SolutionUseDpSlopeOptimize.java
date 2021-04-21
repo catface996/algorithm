@@ -57,7 +57,6 @@ public class SolutionUseDpSlopeOptimize {
                 SolutionUseDpSlopeOptimize solution = new SolutionUseDpSlopeOptimize();
                 int ways = solution.splitInteger(number);
                 int ways2 = Code03_SplitNumber.dp1(number);
-                System.out.println("裂变方案数:" + ways);
                 if (ways != ways2) {
                     System.out.println("裂变不一致:" + number);
                 }
