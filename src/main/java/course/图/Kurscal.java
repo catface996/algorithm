@@ -11,7 +11,9 @@ import java.util.Stack;
 
 import course.图.structure.Edge;
 import course.图.structure.Graph;
+import course.图.structure.GraphGenerator;
 import course.图.structure.Node;
+import org.junit.Test;
 
 /**
  * @author by catface
@@ -21,6 +23,8 @@ public class Kurscal {
 
     /**
      * 贪心算法,每次选最小的边进行连接
+     * <p>
+     * 测试数据参考: https://blog.csdn.net/qq_42152365/article/details/83515782
      */
     public Set<Edge> minTree(Graph graph) {
 
@@ -94,6 +98,22 @@ public class Kurscal {
 
         private boolean isSameSet(Node nodeI, Node nodeJ) {
             return find(nodeI) == find(nodeJ);
+        }
+
+    }
+
+    public static class TestClass {
+        @Test
+        public void test1() {
+            int[][] matrix = GraphGenerator.buildMatrix();
+            Graph graph = GraphGenerator.createGraph(matrix);
+            Kurscal kurscal = new Kurscal();
+            Set<Edge> ans = kurscal.minTree(graph);
+            int totalWeight = 0;
+            for (Edge an : ans) {
+                totalWeight += an.weight;
+            }
+            System.out.println("最小生成树权重和:"+totalWeight);
         }
     }
 }
