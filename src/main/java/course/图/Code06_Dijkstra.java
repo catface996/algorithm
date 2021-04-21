@@ -5,7 +5,10 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 
 import course.图.structure.Edge;
+import course.图.structure.Graph;
+import course.图.structure.GraphGenerator;
 import course.图.structure.Node;
+import org.junit.Test;
 
 // no negative weight
 public class Code06_Dijkstra {
@@ -160,6 +163,21 @@ public class Code06_Dijkstra {
 			result.put(cur, distance);
 		}
 		return result;
+	}
+
+	public static class TestClass{
+		@Test
+		public void test1(){
+			int[][] matrix = GraphGenerator.buildMatrix();
+			Graph graph = GraphGenerator.createGraph(matrix);
+			Node from = null;
+			for (Node value : graph.nodes.values()) {
+				from = value;
+				break;
+			}
+			HashMap<Node, Integer> ans = Code06_Dijkstra.dijkstra2(from,graph.nodes.size());
+			System.out.println("");
+		}
 	}
 
 }
