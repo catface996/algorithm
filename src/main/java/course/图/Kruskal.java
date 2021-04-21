@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author by catface
  * @date 2021/4/20 5:22 下午
  */
-public class Kurscal {
+public class Kruskal {
 
     /**
      * 贪心算法,每次选最小的边进行连接
@@ -107,8 +107,8 @@ public class Kurscal {
         public void test1() {
             int[][] matrix = GraphGenerator.buildMatrix();
             Graph graph = GraphGenerator.createGraph(matrix);
-            Kurscal kurscal = new Kurscal();
-            Set<Edge> ans = kurscal.minTree(graph);
+            Kruskal kruskal = new Kruskal();
+            Set<Edge> ans = kruskal.minTree(graph);
             int totalWeight = 0;
             for (Edge an : ans) {
                 totalWeight += an.weight;
