@@ -43,23 +43,26 @@ package leetcode.拓扑排序.P207课程表;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import org.junit.Test;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution2 {
 
-    // 8:27 下午	info
-    //				解答成功:
-    //				执行耗时:15 ms,击败了16.52% 的Java用户
-    //				内存消耗:39.5 MB,击败了18.38% 的Java用户
+    // 10:30 上午	info
+    //					解答成功:
+    //					执行耗时:8 ms,击败了27.51% 的Java用户
+    //					内存消耗:39.2 MB,击败了42.83% 的Java用户
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         if (prerequisites == null || prerequisites.length <= 0) {
             return true;
         }
+        int resolveCount = 0;
         Map<Integer, Course> courseNodeMap = new HashMap<>();
         for (int[] prerequisite : prerequisites) {
             int firstId = prerequisite[1];
@@ -69,19 +72,26 @@ class Solution {
             firstCourse.nextCourses.add(nextCourse);
             nextCourse.inDegree += 1;
         }
-        Heap heap = new Heap(courseNodeMap.size());
+        Queue<Course> queue = new LinkedList<>();
         for (Course value : courseNodeMap.values()) {
-            heap.push(value);
-        }
-
-        while (!heap.isEmpty()) {
-            Course course = heap.pop();
-            if (course.inDegree > 0) {
-                return false;
+            if (value.inDegree <= 0) {
+                resolveCount++;
+                queue.add(value);
             }
+        }
+        while (!queue.isEmpty()) {
+            Course course = queue.poll();
             for (Course nextCourse : course.nextCourses) {
                 nextCourse.inDegree -= 1;
-                heap.adjust(nextCourse);
+                if (nextCourse.inDegree == 0) {
+                    resolveCount++;
+                    queue.add(nextCourse);
+                }
+            }
+        }
+        for (Course value : courseNodeMap.values()) {
+            if (value.inDegree > 0) {
+                return false;
             }
         }
         return true;
@@ -108,84 +118,11 @@ class Solution {
         }
     }
 
-    public static class Heap {
-        Course[] arr;
-        private int size;
-        private Map<Course, Integer> indexMap;
-
-        public Heap(int size) {
-            this.arr = new Course[size];
-            this.size = 0;
-            this.indexMap = new HashMap<>();
-        }
-
-        public void push(Course course) {
-            arr[size] = course;
-            indexMap.put(course, size);
-            heapInsert(size++);
-        }
-
-        public Course pop() {
-            Course ans = arr[0];
-            swap(0, size - 1);
-            arr[size - 1] = null;
-            indexMap.remove(ans);
-            size--;
-            heapify(0);
-            return ans;
-        }
-
-        public void adjust(Course course) {
-            Integer index = indexMap.get(course);
-            if (index != null) {
-                heapify(index);
-                heapInsert(index);
-            }
-        }
-
-        public boolean isEmpty() {
-            return size <= 0;
-        }
-
-        private void heapInsert(int index) {
-            while (arr[index].inDegree < arr[(index - 1) / 2].inDegree) {
-                swap(index, (index - 1) / 2);
-                index = (index - 1) / 2;
-            }
-        }
-
-        private void heapify(int index) {
-            int left = index * 2 + 1;
-            while (left < size) {
-                int swapIndex = left + 1 < size && arr[left + 1].inDegree < arr[left].inDegree ? left + 1 : left;
-                swapIndex = arr[index].inDegree < arr[swapIndex].inDegree ? index : swapIndex;
-                if (swapIndex == index) {
-                    return;
-                }
-                swap(index, swapIndex);
-                index = swapIndex;
-                left = index * 2 + 1;
-            }
-        }
-
-        private void swap(int i, int j) {
-            if (i == j) {
-                return;
-            }
-            Course iCourse = arr[i];
-            Course jCourse = arr[j];
-            arr[i] = jCourse;
-            indexMap.put(jCourse, i);
-            arr[j] = iCourse;
-            indexMap.put(iCourse, j);
-        }
-    }
-
     public static class TestClass {
         @Test
         public void test1() {
             int[][] course = {{1, 0}, {0, 1}};
-            Solution solution = new Solution();
+            Solution2 solution = new Solution2();
             boolean ans = solution.canFinish(2, course);
             System.out.println(ans);
         }
@@ -193,8 +130,8 @@ class Solution {
         @Test
         public void test2() {
             int[][] course = {{1, 2}, {1, 3}, {2, 3}, {3, 4}, {3, 5}, {4, 5}, {4, 6}};
-            Solution solution = new Solution();
-            boolean ans = solution.canFinish(2, course);
+            Solution2 solution = new Solution2();
+            boolean ans = solution.canFinish(6, course);
             System.out.println(ans);
         }
     }
