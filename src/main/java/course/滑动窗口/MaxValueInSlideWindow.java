@@ -11,7 +11,7 @@ import util.ArrayUtil;
  * @date 2021/4/22 9:59 上午
  */
 @Slf4j
-public class Solution {
+public class MaxValueInSlideWindow {
 
     //假设一个固定大小为W的窗口，依次划过arr，
     //返回每一次滑出状况的最大值
@@ -31,7 +31,6 @@ public class Solution {
             int max = arr[L];
             for (int i = L + 1; i <= R; i++) {
                 max = Math.max(max, arr[i]);
-
             }
             res[index++] = max;
             L++;
@@ -104,17 +103,17 @@ public class Solution {
         public void test0() {
             int[] arr = new int[] {4, 3, 5, 4, 3, 3, 6, 7};
             int w = 3;
-            Solution solution = new Solution();
-            int[] ans = solution.getMaxInSlideWindow(arr, w);
-            int[] ans2 = solution.getMaxInSlideWindowForce(arr, w);
+            MaxValueInSlideWindow maxValueInSlideWindow = new MaxValueInSlideWindow();
+            int[] ans = maxValueInSlideWindow.getMaxInSlideWindow(arr, w);
+            int[] ans2 = maxValueInSlideWindow.getMaxInSlideWindowForce(arr, w);
             log.info("arr:{},ans:{},ans2:{}", arr, ans, ans2);
         }
 
         @Test
         public void test1() {
             int[] arr = ArrayUtil.randomIntArray(10, 1, 40);
-            Solution solution = new Solution();
-            int[] ans = solution.getMaxInSlideWindow(arr, 3);
+            MaxValueInSlideWindow maxValueInSlideWindow = new MaxValueInSlideWindow();
+            int[] ans = maxValueInSlideWindow.getMaxInSlideWindow(arr, 3);
             log.info("arr:{},ans:{}", arr, ans);
         }
 
@@ -122,8 +121,8 @@ public class Solution {
         public void test2() {
             int[] arr = new int[] {4, 3, 5, 7, 4, 9, 6, 7};
             int w = 3;
-            Solution solution = new Solution();
-            int[] ans = solution.getMinInSlideWindow(arr, w);
+            MaxValueInSlideWindow maxValueInSlideWindow = new MaxValueInSlideWindow();
+            int[] ans = maxValueInSlideWindow.getMinInSlideWindow(arr, w);
             log.info("arr:{},ans:{}", arr, ans);
         }
 
@@ -132,9 +131,9 @@ public class Solution {
             for (int times = 0; times < 10000; times++) {
                 int[] arr = ArrayUtil.randomIntArray(100, 1, 300);
                 int w = 5;
-                Solution solution = new Solution();
-                int[] ans1 = solution.getMaxInSlideWindowForce(arr, w);
-                int[] ans2 = solution.getMaxInSlideWindow(arr, w);
+                MaxValueInSlideWindow maxValueInSlideWindow = new MaxValueInSlideWindow();
+                int[] ans1 = maxValueInSlideWindow.getMaxInSlideWindowForce(arr, w);
+                int[] ans2 = maxValueInSlideWindow.getMaxInSlideWindow(arr, w);
                 for (int i = 0; i < ans1.length; i++) {
                     if (ans2[i] != ans1[i]) {
                         System.out.println("Error");
