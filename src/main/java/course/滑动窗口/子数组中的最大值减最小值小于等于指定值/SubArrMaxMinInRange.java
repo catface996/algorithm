@@ -1,4 +1,4 @@
-package course.滑动窗口;
+package course.滑动窗口.子数组中的最大值减最小值小于等于指定值;
 
 import java.util.LinkedList;
 
@@ -60,6 +60,7 @@ public class SubArrMaxMinInRange {
                     minWindow.pollLast();
                 }
                 minWindow.addLast(R);
+                // 返现最大值减最小值不满足条件时
                 if (arr[maxWindow.peekFirst()] - arr[minWindow.peekFirst()] > sum) {
                     break;
                 } else {

@@ -1,4 +1,4 @@
-package course.滑动窗口;
+package course.滑动窗口.窗口中的最大值;
 
 import java.util.LinkedList;
 

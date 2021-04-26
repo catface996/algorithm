@@ -1,4 +1,4 @@
-package course.滑动窗口;
+package course.滑动窗口.子数组中的最大值减最小值小于等于指定值;
 
 import java.util.LinkedList;
 
@@ -35,12 +35,15 @@ public class SubArrMaxMinInRange2 {
                     minQ.pollLast();
                 }
                 minQ.addLast(right);
+                // 返现最大值减最小值不满足条件时,退出
                 if (arr[maxQ.peekFirst()] - arr[minQ.peekFirst()] > num) {
                     break;
                 } else {
                     right++;
                 }
             }
+            // 累加子数组数量,滑动窗口的右侧下标减左侧下标即为子数组的数量(已左侧为起点的子数组)
+            // 当滑动窗口划过left后,会重新计算下一个以left为起点的子数组
             count += right - left;
             if (left == maxQ.peekFirst()) {
                 maxQ.pollFirst();
