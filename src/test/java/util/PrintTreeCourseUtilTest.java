@@ -6,7 +6,7 @@ import org.junit.Test;
  * @author by catface
  * @date 2021/4/8 8:07 下午
  */
-public class PrintTreeNodeUtilTest {
+public class PrintTreeCourseUtilTest {
 
     @Test
     public void test_1() {
