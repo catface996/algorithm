@@ -5,9 +5,9 @@ package util;
  * @date 2021/4/8 5:05 下午
  */
 public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
 
     TreeNode() {}
 
