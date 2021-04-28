@@ -49,14 +49,22 @@ public class Solution {
         }
         int[] next = new int[str2.length()];
         next[0] = -1;
+        log.info("str:{}", str2);
+        log.info("next[0]=-1");
         int i = 2;
+        // 表示哪个位置的字符与i-1位置的字符比,初始值 i=2,i-1为1,current为0
         int current = 0;
         while (i < str2.length()) {
+            log.info("i-1={}->{},cn={}->{},match:{}", i - 1, str2.charAt(i - 1), current, str2.charAt(current),
+                str2.charAt(i - 1) == str2.charAt(current));
             if (str2.charAt(i - 1) == str2.charAt(current)) {
+                log.info("next[{}]={}", i, current + 1);
                 next[i++] = ++current;
             } else if (current > 0) {
+                log.info("current=next[{}]->{}", current, next[current]);
                 current = next[current];
             } else {
+                log.info("next[{}]=0", i);
                 next[i++] = 0;
             }
         }
@@ -75,6 +83,14 @@ public class Solution {
         @Test
         public void testNext2() {
             String str2 = "abcabck";
+            Solution solution = new Solution();
+            int[] next = solution.buildNext(str2);
+            log.info("str:{},next:{}", str2, next);
+        }
+
+        @Test
+        public void testNext3() {
+            String str2 = "abckabcfabckf";
             Solution solution = new Solution();
             int[] next = solution.buildNext(str2);
             log.info("str:{},next:{}", str2, next);
