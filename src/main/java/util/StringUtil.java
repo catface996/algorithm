@@ -22,4 +22,15 @@ public class StringUtil {
         return sb.toString();
     }
 
+    public static char[] preProcessForPalindrome(String str) {
+        char[] preChars = new char[str.length() * 2 + 1];
+        int preIndex = 0;
+        for (int i = 0; i < str.length(); i++) {
+            preChars[preIndex++] = '#';
+            preChars[preIndex++] = str.charAt(i);
+        }
+        preChars[preIndex] = '#';
+        return preChars;
+    }
+
 }
