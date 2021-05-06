@@ -30,7 +30,7 @@ public class Solution3 {
         return j == str2.length() ? i - j : -1;
     }
 
-    private int[] buildNext(String str) {
+    public int[] buildNext(String str) {
         if (str.length() == 1) {
             return new int[] {-1};
         }
@@ -39,9 +39,12 @@ public class Solution3 {
         int i = 2;
         int cn = 0;
         while (i < str.length()) {
+            char cnChar = str.charAt(cn);
+            char iChar = str.charAt(i - 1);
             if (str.charAt(i - 1) == str.charAt(cn)) {
                 next[i++] = ++cn;
             } else if (cn > 0) {
+                // cn位置和i位置的字符不相等时,
                 cn = next[cn];
             } else {
                 next[i++] = 0;
@@ -53,11 +56,36 @@ public class Solution3 {
     public static class TestClass {
         @Test
         public void testNext1() {
-            String s = "abcabck";
+            String s = "abcabcakf";
             Solution3 solution3 = new Solution3();
             int[] next = solution3.buildNext(s);
             log.info("next:{}", next);
         }
+
+        @Test
+        public void testNext2() {
+            String s = "abcdeabcdeabcdabcabakf";
+            Solution3 solution3 = new Solution3();
+            int[] next = solution3.buildNext(s);
+            log.info("next:{}", next);
+        }
+
+        @Test
+        public void testNext3() {
+            String s = "ababcabcdabcdeabcdefk";
+            Solution3 solution3 = new Solution3();
+            int[] next = solution3.buildNext(s);
+            log.info("next:{}", next);
+        }
+
+        @Test
+        public void testNext4() {
+            String s = "abcxyzabclmnabcxyzabckf";
+            Solution3 solution3 = new Solution3();
+            int[] next = solution3.buildNext(s);
+            log.info("next:{}", next);
+        }
+
 
         @Test
         public void testIndexOf1() {
