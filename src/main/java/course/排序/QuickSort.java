@@ -170,4 +170,13 @@ public class QuickSort {
         System.out.println(nums);
     }
 
+    public static class TestClass {
+        @Test
+        public void test() {
+            int[] arr = {9, 27, 26, 2, 36, 4, 4, 24, 2, 15};
+            QuickSort quickSort = new QuickSort();
+            quickSort.quickSort3(arr, 0, arr.length - 1);
+        }
+    }
+
 }
