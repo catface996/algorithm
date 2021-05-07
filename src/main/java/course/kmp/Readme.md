@@ -36,6 +36,12 @@ abcabck的next数组为: [-1, 0, 0, 0, 1, 2, 3]
 
 ![image-20210506195749243](https://tva1.sinaimg.cn/large/008i3skNly1gq8ygcqnjcj31ma0jkq8s.jpg)
 
+<center><font size=5>图1</font></center>
+
+![image-20210506201954349](https://tva1.sinaimg.cn/large/008i3skNly1gq8z3bpeqsj32400l8q9g.jpg)
+
+<center><font size=5>图2</font></center>
+
 
 ## str1中匹配str2
 str1 = "abcabcabckf"
