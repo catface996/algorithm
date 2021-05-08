@@ -122,7 +122,7 @@ public class NumArray2 {
             // 假设index=7,7位置只累计了7位置的值,6位置累计了5~6位置的累加和,4位置累计了1~4位置的累加和,所以只需要返回tree[7]+tree[6]+tree[4]
             // 8转成二进制 0000 1000,
             // 7,6,4 分别转成二进制 0000 0111, 0000 0110, 0000 0100
-            // 桐乡公式为 index,index-=index&-index, 即 index - index只保留最右侧i
+            // 通项公式为 index,index-=index&-index, 即 index - index只保留最右侧i
             int ans = 0;
             while (index > 0) {
                 ans += tree[index];
