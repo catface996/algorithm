@@ -13,6 +13,10 @@
 
   支持范围add,支持范围update,支持范围query
 
+* Index Tree
+
+  不支持范围更新,只支持单点更新,支持1~index范围查询(可以变换成left到right查询),容易扩展成二维,三维
+
 ## Index Tree 原理
 
 在tree[]数组中:
@@ -27,7 +31,7 @@
 
 ...以此类推
 
-![image-20210508184533711](/Users/catface/Library/Application%20Support/typora-user-images/image-20210508184533711.png)
+![image-20210508184533711](https://tva1.sinaimg.cn/large/008i3skNly1gqd463xxcaj31lm0q8gtk.jpg)
 
 ## 实现方案
 
@@ -53,6 +57,4 @@ tree[] 数组来记录累加和,长度为原始数组长度加1,弃用0位置.
   // 7,6,4 分别转成二进制 0000 0111, 0000 0110, 0000 0100
   // 通项公式为 index,index-=index&-index, 即 index - index只保留最右侧i
   ```
-
-
 
