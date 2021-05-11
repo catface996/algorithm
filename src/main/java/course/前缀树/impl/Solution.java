@@ -26,10 +26,10 @@ public class Solution {
         private Map<Character, Node> nexts = new HashMap<>();
     }
 
-    public static class Tire {
+    public static class Trie {
         private Node root;
 
-        public Tire() {
+        public Trie() {
             root = new Node();
         }
 
@@ -83,15 +83,15 @@ public class Solution {
         @Test
         public void testQueryExactMatch() {
             String[] arr = {"ab", "abc", "abcd", "x", "xy", "xyz", "ab"};
-            Tire tire = new Tire();
+            Trie trie = new Trie();
             for (String s : arr) {
-                tire.insert(s);
+                trie.insert(s);
             }
-            int ans = tire.queryExactMatch("ab");
-            int ans2 = tire.queryPrefixMatch("ab");
+            int ans = trie.queryExactMatch("ab");
+            int ans2 = trie.queryPrefixMatch("ab");
             System.out.println(ans);
             System.out.println(ans2);
-            int ans3 = tire.queryPrefixMatch("xy");
+            int ans3 = trie.queryPrefixMatch("xy");
             System.out.println(ans3);
         }
 
