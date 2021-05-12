@@ -69,6 +69,9 @@ public class Solution {
             int ans = 0;
             for (int i = 0; i < content.length(); i++) {
                 index = content.charAt(i) - 'a';
+                // 当前节点没有向下的路,并且当前节点不是root
+                //1.现在来到的节点是可以向下匹配的
+                //2.现在来到的节点是根节点了
                 while (cur.nexts[index] == null && cur != root) {
                     cur = cur.fail;
                 }

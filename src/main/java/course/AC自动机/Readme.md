@@ -59,7 +59,9 @@ public class AcAutomation {
     public int containWordKind();
 }
 ~~~
-
+1.在前缀树上没匹配到一个节点,都跟随该节点的fail指针遍历一遍,途径的所有fail节点中,是有效模式串终点的,收集答案,
+注意:当前节点保持不变
+2.如果匹配到某一节点无法继续向下匹配,当前节点跳转到当前节点的fail节点
 
 
 
