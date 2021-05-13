@@ -18,7 +18,7 @@ public class PrintTreeNodeUtil {
      *
      * @param root 二叉树根节点
      */
-    public static void printTree(util.TreeNode root) {
+    public static void printTree(TreeNode root) {
         if (root == null) {
             System.out.println("空树:[]");
             return;
@@ -52,7 +52,7 @@ public class PrintTreeNodeUtil {
      * @param x 树种的某个节点
      * @return 二维矩阵
      */
-    private static char[][] initTreeBitmap(util.TreeNode x) {
+    private static char[][] initTreeBitmap(TreeNode x) {
         int nodeWidth = 2;
         int depth = getMaxDepth(x);
         int row = depth * 2;
