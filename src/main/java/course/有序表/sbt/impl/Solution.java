@@ -87,6 +87,12 @@ public class Solution {
             return targetNode == null ? null : targetNode.key;
         }
 
+        /**
+         * 根据指定的key查找相应的节点
+         *
+         * @param key 指定的key
+         * @return key指向的节点
+         */
         private SbtNode<K, V> findByKey(K key) {
             SbtNode<K, V> cur = root;
             while (cur != null) {
@@ -144,60 +150,73 @@ public class Solution {
             if (cur == null) {
                 return new SbtNode<>(key, value);
             }
+            cur.size++;
             if (key.compareTo(cur.key) > 0) {
                 cur.right = add(cur.right, key, value);
             } else {
                 cur.left = add(cur.left, key, value);
             }
-            cur.size++;
             return maintain(cur);
         }
 
         /**
-         * 删除sbt中指定的key
+         * 删除sbt中指定的key,删除key的前提是key已经存在
+         * <p>
+         * 删除节点时,可以不做平衡性的维护,在下次添加时会重新调整
          *
          * @param cur 当前检查到的节点
          * @param key 期望被删除的key
          * @return 删除期望的key, 重新维护平衡性后返回的新头部
          */
         private SbtNode<K, V> delete(SbtNode<K, V> cur, K key) {
-            if (cur == null) {
+            // cur一定不会为空,调用delete方法时,保证key是存在的
+            cur.size--;
+            int cmp = key.compareTo(cur.key);
+
+            if (cmp > 0) {
+                cur.right = delete(cur.right, key);
+                return cur;
+            }
+
+            if (cmp < 0) {
+                cur.left = delete(cur.left, key);
+                return cur;
+            }
+
+            // 以下逻辑为当前节点即为要删除的节点
+            if (cur.left != null && cur.right == null) {
+                // 当前节点有左孩子,无右孩子,用左孩子代替当前节点
+                cur = cur.left;
+                return cur;
+            }
+            if (cur.left == null && cur.right != null) {
+                // 当前节点有右孩子,无左孩子,用右孩子代替当前节点
+                cur = cur.right;
+                return cur;
+            }
+
+            if (cur.left == null && cur.right == null) {
+                // 当前节点既没有左孩子,也没有右孩子,返回空即可
                 return null;
             }
-            int cmp = key.compareTo(cur.key);
-            if (cmp == 0) {
-                // 检查当前节点是否有左右子节点
-                if (cur.left != null && cur.right != null) {
-                    // 左右孩子都存在,删除起来比较麻烦
-                    SbtNode<K, V> mostLeft = cur.right;
-                    while (mostLeft.left != null) {
-                        mostLeft = mostLeft.left;
-                    }
-                    cur.right = delete(cur.right, mostLeft.key);
-                    mostLeft.left = cur.left;
-                    mostLeft.right = cur.right;
-                    cur = mostLeft;
-                } else if (cur.left != null && cur.right == null) {
-                    cur = cur.left;
-                } else if (cur.left == null && cur.right != null) {
-                    cur = cur.right;
-                } else if (cur.left == null && cur.right == null) {
-                    cur = null;
-                }
-            } else if (cmp > 0) {
-                cur.right = delete(cur.right, key);
-            } else if (cmp < 0) {
-                cur.left = delete(cur.left, key);
+
+            // 当前节点,即有左孩子,也有右孩子,用当前节点右孩子的最左节点代替当前节点
+            SbtNode<K, V> mostLeft = cur.right;
+            while (mostLeft.left != null) {
+                mostLeft = mostLeft.left;
             }
-            if (cur != null) {
-                cur.size--;
-                cur = maintain(cur);
-            }
-            return cur;
+            // 此处递归删除即可
+            delete(cur.right, mostLeft.key);
+            mostLeft.left = cur.left;
+            mostLeft.right = cur.right;
+            return mostLeft;
+
         }
 
         /**
          * 维护指定节点的平衡性
+         * <p>
+         * 需要递归向下维护整棵子树的平衡性
          *
          * @param cur 指定要维护的节点
          * @return 调整平衡性后, 返回新的头节点
@@ -210,34 +229,44 @@ public class Solution {
             int llSize = cur.left != null && cur.left.left != null ? cur.left.left.size : 0;
             int lrSize = cur.left != null && cur.left.right != null ? cur.left.right.size : 0;
             int rSize = cur.right != null ? cur.right.size : 0;
-            if (llSize > rSize || lrSize > rSize) {
-                // 为了代码易于理解,不做if分支优化
-                // 左孩子的子节点中出现节点数大于叔叔的情况
-                if (llSize > rSize) {
-                    // LL 型,进行一次右旋即可
-                    cur = rightRotate(cur);
-                } else {
-                    // LR型,做一次左旋,再做一次右旋
-                    cur.left = leftRotate(cur.left);
-                    cur = rightRotate(cur);
-                }
-            }
-
             int rlSize = cur.right != null && cur.right.left != null ? cur.right.left.size : 0;
             int rrSize = cur.right != null && cur.right.right != null ? cur.right.right.size : 0;
             int lSize = cur.left != null ? cur.left.size : 0;
-            if (rlSize > lSize || rrSize > lSize) {
-                // 右孩子中的子节点出现数量大于叔叔的情况
-                if (rrSize > lSize) {
-                    //RR型,只做一次左旋即可
-                    cur = leftRotate(cur);
-                } else {
-                    // 先做一次右旋,再做一次左旋
-                    cur.right = rightRotate(cur.right);
-                    cur = leftRotate(cur);
-                }
+
+            if (llSize > rSize) {
+                // LL型; LL型和LR型
+                cur = rightRotate(cur);
+                cur.right = maintain(cur.right);
+                return maintain(cur);
             }
+
+            if (lrSize > rSize) {
+                // 仅LR型;
+                cur.left = leftRotate(cur.left);
+                cur = rightRotate(cur);
+                cur.left = maintain(cur.left);
+                cur.right = maintain(cur.right);
+                return maintain(cur);
+            }
+
+            if (rrSize > lSize) {
+                // RR型; 或者 RL型和RR型
+                cur = leftRotate(cur);
+                cur.left = maintain(cur.left);
+                return maintain(cur);
+            }
+
+            if (rlSize > lSize) {
+                cur.right = rightRotate(cur.right);
+                cur = leftRotate(cur);
+                cur.left = maintain(cur.left);
+                cur.right = maintain(cur.right);
+                return maintain(cur);
+            }
+
+            // 不违规
             return cur;
+
         }
 
         /**
@@ -335,11 +364,38 @@ public class Solution {
                 sbtTree.put(i, i + 30);
             }
             PrintSbtUtil.printTree(sbtTree.root);
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i <= 10; i++) {
                 Integer value = sbtTree.remove(i);
                 System.out.println("被移除的key:" + i + ",被移除的value:" + value);
-                PrintSbtUtil.printTree(sbtTree.root);
             }
+            PrintSbtUtil.printTree(sbtTree.root);
+            sbtTree.put(21, 21);
+            PrintSbtUtil.printTree(sbtTree.root);
+            sbtTree.maintain(sbtTree.root.left);
+            PrintSbtUtil.printTree(sbtTree.root);
+        }
+
+        @Test
+        public void testRemoveThenAdd() {
+            SbtTree<Integer, Integer> sbtTree = new SbtTree<>();
+            for (int i = 0; i < 20; i++) {
+                sbtTree.put(i, i + 30);
+            }
+            PrintSbtUtil.printTree(sbtTree.root);
+            for (int i = 0; i <= 10; i++) {
+                sbtTree.remove(i);
+            }
+            PrintSbtUtil.printTree(sbtTree.root);
+            sbtTree.put(10, 10);
+            PrintSbtUtil.printTree(sbtTree.root);
+            sbtTree.put(9, 9);
+            PrintSbtUtil.printTree(sbtTree.root);
+            sbtTree.put(8, 8);
+            PrintSbtUtil.printTree(sbtTree.root);
+            sbtTree.put(7, 7);
+            PrintSbtUtil.printTree(sbtTree.root);
+            sbtTree.put(6, 6);
+            PrintSbtUtil.printTree(sbtTree.root);
         }
     }
 }
