@@ -1,6 +1,6 @@
 package util;
 
-import course.有序表.avl.impl.AvlNode;
+import course.有序表.sbt.impl.SbtNode;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -8,14 +8,14 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2021/4/8 5:28 下午
  */
 @Slf4j
-public class PrintAvlUtil {
+public class PrintSbtUtil {
 
     /**
      * 打印二叉树
      *
      * @param root 二叉树根节点
      */
-    public static void printTree(AvlNode root) {
+    public static void printTree(SbtNode root) {
         if (root == null) {
             System.out.println("空树:[]");
             return;
@@ -35,7 +35,7 @@ public class PrintAvlUtil {
      * @param x 树种的某个节点
      * @return 二维矩阵
      */
-    private static char[][] initTreeBitmap(AvlNode x) {
+    private static char[][] initTreeBitmap(SbtNode x) {
         int nodeWidth = 7;
         int depth = getMaxDepth(x);
         int row = depth * 2;
@@ -55,7 +55,7 @@ public class PrintAvlUtil {
      * @param x 根节点
      * @return 最大深度
      */
-    private static int getMaxDepth(AvlNode x) {
+    private static int getMaxDepth(SbtNode x) {
         if (x == null) {
             return 0;
         }
@@ -73,7 +73,7 @@ public class PrintAvlUtil {
      * @param depth  当前处理的深度
      * @param bitmap 表示二叉树位图的二维矩阵
      */
-    private static void process(AvlNode x, int start, int end, int depth, char[][] bitmap) {
+    private static void process(SbtNode x, int start, int end, int depth, char[][] bitmap) {
         if (x == null) {
             return;
         }
@@ -82,7 +82,7 @@ public class PrintAvlUtil {
         int sideStart = (start + middle) / 2;
         int sideEnd = (middle + end) / 2;
 
-        char[] context = ("(" + x.key.toString() + "," + x.value.toString() + "," + x.height + ")").toCharArray();
+        char[] context = ("(" + x.key.toString() + "," + x.value.toString() + "," + x.size + ")").toCharArray();
         int halfContextLength = context.length / 2;
 
         bitmap[row][sideEnd] = ' ';
