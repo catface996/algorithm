@@ -5,7 +5,6 @@ https://zhuanlan.zhihu.com/p/68516038
 ## 特点
 
 * 构造出的结构与数据样本无关.(通过随机数决定某个key出现在哪一层)
-
 * 第一层有个N个节点,第二层有N/2,第三层有N/4,第四层有N/8,...
 
 ## 复杂度
@@ -86,3 +85,11 @@ public static class SkipListMap<K extends Comparable<K>, V> {
     public int size();
 }
 ~~~
+
+### 步骤分解
+
+#### 找到最右且小于指定key的节点
+
+* 第N层中找到最右且小于指定key的节点
+* 再以上一层找到最右的节点为起点,找到下一层的左右且小于指定key的节点
+* 重复以上步骤,知道层数变为0
