@@ -12,6 +12,10 @@ import course.有序表.skip.impl.Solution2.SkipNode;
 public class PrintSkipListUtil {
 
     public static void print(SkipNode head) {
+        if (head.nextNodes.size() < 1) {
+            System.out.println("空跳表");
+            return;
+        }
         // 9,支持两位数,11 支持三位数
         int nodeWidth = 9;
         int maxLevel = head.nextNodes.size();
@@ -90,5 +94,5 @@ public class PrintSkipListUtil {
         }
         System.out.println();
     }
-    
+
 }
