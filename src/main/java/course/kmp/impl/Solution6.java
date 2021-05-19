@@ -13,7 +13,7 @@ public class Solution6 {
 
     public int kmpIndexOf(String str1, String str2) {
         if (str1 == null || str1.length() < 1 || str2 == null || str2.length() < 1 || str1.length() < str2.length()) {
-            return -1;
+            return 0;
         }
         int[] next = buildNext(str2);
         int i = 0;
