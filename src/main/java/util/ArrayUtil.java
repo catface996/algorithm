@@ -66,6 +66,15 @@ public class ArrayUtil {
         return result;
     }
 
+    public static int[] randomSortedNotRepeat(int size, int start, int maxStepRange) {
+        int[] ans = new int[size];
+        ans[0] = start;
+        for (int i = 1; i < size; i++) {
+            ans[i] = ans[i - 1] + (int)(Math.random() * maxStepRange + 1);
+        }
+        return ans;
+    }
+
     public static boolean checkSortResult(int[] originalArray, int[] result) {
         if (result == null || originalArray == null) {
             return false;
@@ -89,6 +98,5 @@ public class ArrayUtil {
         arr[rightIndex] = arr[leftIndex] ^ arr[rightIndex];
         arr[leftIndex] = arr[leftIndex] ^ arr[rightIndex];
     }
-
 
 }

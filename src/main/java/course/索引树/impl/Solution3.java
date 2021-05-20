@@ -49,7 +49,7 @@ public class Solution3 {
         public void testSum() {
             IndexTree indexTree = new IndexTree(10);
             for (int i = 1; i <= 10; i++) {
-                indexTree.add(i, 1);
+                indexTree.add(i, 2);
             }
             for (int i = 1; i <= 10; i++) {
                 int ans = indexTree.sum(i);
