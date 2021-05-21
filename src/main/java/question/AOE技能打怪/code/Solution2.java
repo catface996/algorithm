@@ -1,5 +1,7 @@
 package question.AOE技能打怪.code;
 
+import java.text.MessageFormat;
+
 import org.junit.Test;
 import util.ArrayUtil;
 
@@ -8,6 +10,11 @@ import util.ArrayUtil;
  * @date 2021/5/21 2:04 下午
  */
 public class Solution2 {
+
+    private int mostLeft;
+    private int target;
+    private int mostRight;
+    private String reg = "[{0},{1},{2},{3},{4}]";
 
     /**
      * 被打到的每只怪兽损失1点血量。
@@ -19,13 +26,16 @@ public class Solution2 {
      */
     public int minAoe(int[] x, int[] hp, int range) {
         int minAoeTimes = 0;
-        int mostLeft;
+        StringBuilder stringBuilder = new StringBuilder();
         for (; ; ) {
             mostLeft = mostLeftLiveMonster(hp);
             if (mostLeft == -1) {
+                System.out.println(stringBuilder);
                 return minAoeTimes;
             }
-            minAoeTimes += useAoeOneTime(x, hp, mostLeft, range);
+            int aoeTimes = useAoeOneTime(x, hp, mostLeft, range);
+            minAoeTimes += aoeTimes;
+            stringBuilder.append(MessageFormat.format(reg, mostLeft, target, mostRight, -aoeTimes, minAoeTimes));
         }
     }
 
@@ -55,7 +65,7 @@ public class Solution2 {
      * @param range    aoe技能覆盖的范围
      */
     public int useAoeOneTime(int[] x, int[] hp, int mostLeft, int range) {
-        int target = mostLeft;
+        target = mostLeft;
         for (int index = mostLeft; index < x.length; index++) {
             if (x[index] - x[mostLeft] <= range) {
                 target = index;
@@ -63,7 +73,7 @@ public class Solution2 {
                 break;
             }
         }
-        int mostRight = target;
+        mostRight = target;
         for (int index = target; index < x.length; index++) {
             if (x[index] - x[target] <= range) {
                 mostRight = index;
