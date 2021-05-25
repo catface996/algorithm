@@ -1,4 +1,6 @@
-package question.class2_能力超过难度赚相应的钱.code;
+package leetcode.贪心.P826安排工作以达到最大收益;
+
+import java.util.Arrays;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -10,20 +12,44 @@ import org.junit.Test;
 @Slf4j
 public class Solution3 {
 
-    public int[] maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
-        TreeMap jobMap = new TreeMap();
-        for (int i = 0; i < difficulty.length; i++) {
-            jobMap.put(difficulty[i], profit[i]);
-        }
+    // 1:01 下午	info
+    //				解答成功:
+    //				执行耗时:38 ms,击败了49.07% 的Java用户
+    //				内存消耗:39.9 MB,击败了26.03% 的Java用户
 
-        int[] bestProfit = new int[worker.length];
-        for (int i = 0; i < worker.length; i++) {
-            Integer tempProfit = jobMap.getBestProfit(worker[i]);
+    public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+        TreeMap jobMap = new TreeMap();
+        Job[] jobs = new Job[difficulty.length];
+        for (int i = 0; i < difficulty.length; i++) {
+            jobs[i] = new Job(difficulty[i], profit[i]);
+        }
+        Arrays.sort(jobs, (o1, o2) -> {
+            if (o1.difficulty == o2.difficulty) {
+                return o1.profit - o2.profit;
+            }
+            return o1.difficulty - o2.difficulty;
+        });
+        for (Job job : jobs) {
+            jobMap.put(job.difficulty,job.profit);
+        }
+        int bestProfit = 0;
+        for (int j : worker) {
+            Integer tempProfit = jobMap.getBestProfit(j);
             if (tempProfit != null) {
-                bestProfit[i] = tempProfit;
+                bestProfit += tempProfit;
             }
         }
         return bestProfit;
+    }
+
+    public static class Job {
+        private int difficulty;
+        private int profit;
+
+        public Job(int difficulty, int profit) {
+            this.difficulty = difficulty;
+            this.profit = profit;
+        }
     }
 
     /**
@@ -56,6 +82,8 @@ public class Solution3 {
 
         /**
          * 如果key已经存在,当value大于原有的value时,更新否则不更新
+         * <p>
+         * 加入的key和value 与之前加入的key和value 要保持单调性,破坏单调性的不加入
          *
          * @param key   key,在本题中是工作难度
          * @param value value,在本题中是工作收益
@@ -231,18 +259,6 @@ public class Solution3 {
     }
 
     public static class TestClass {
-        @Test
-        public void testPut() {
-            TreeMap treeMap = new TreeMap();
-            for (int i = 0; i < 10; i++) {
-                treeMap.put(i, i);
-                PrintAvlUtil.printTree(treeMap.root);
-                treeMap.put(i, i + 1);
-                PrintAvlUtil.printTree(treeMap.root);
-                treeMap.put(i, i - 1);
-                PrintAvlUtil.printTree(treeMap.root);
-            }
-        }
 
         // 示例：
         //
@@ -253,7 +269,7 @@ public class Solution3 {
         public void test1() {
             int[] difficulty = {2, 4, 6, 8, 10}, profit = {10, 20, 30, 40, 50}, worker = {4, 5, 6, 7};
             Solution3 solution3 = new Solution3();
-            int[] bestProfit = solution3.maxProfitAssignment(difficulty, profit, worker);
+            int bestProfit = solution3.maxProfitAssignment(difficulty, profit, worker);
             log.info("bestProfit:{}", bestProfit);
         }
 
@@ -268,7 +284,7 @@ public class Solution3 {
         public void test2() {
             int[] difficulty = {68, 35, 52, 47, 86}, profit = {67, 17, 1, 81, 3}, worker = {92, 10, 85, 84, 82};
             Solution3 solution3 = new Solution3();
-            int[] bestProfit = solution3.maxProfitAssignment(difficulty, profit, worker);
+            int bestProfit = solution3.maxProfitAssignment(difficulty, profit, worker);
             log.info("bestProfit:{}", bestProfit);
         }
 

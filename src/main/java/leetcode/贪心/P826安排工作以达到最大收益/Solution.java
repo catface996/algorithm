@@ -37,16 +37,22 @@ import org.junit.Test;
 @Slf4j
 public class Solution {
 
+    // 2:09 下午	info
+    //				解答成功:
+    //				执行耗时:1040 ms,击败了18.59% 的Java用户
+    //				内存消耗:39 MB,击败了98.14% 的Java用户
+
     public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
         if (worker == null || worker.length < 1 || difficulty == null || difficulty.length < 1 || profit == null
             || profit.length < 1) {
             return 0;
         }
         int bestProfit = 0;
-        for (int i = 0; i < worker.length; i++) {
-            int bestChoose = 0;
+        int bestChoose;
+        for (int j : worker) {
+            bestChoose = 0;
             for (int h = 0; h < difficulty.length; h++) {
-                if (worker[i] >= difficulty[h]) {
+                if (j >= difficulty[h]) {
                     bestChoose = Math.max(bestChoose, profit[h]);
                 }
             }

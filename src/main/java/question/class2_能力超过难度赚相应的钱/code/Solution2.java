@@ -84,5 +84,20 @@ public class Solution2 {
             int[] bestProfit = solution2.maxProfitAssignment(difficulty, profit, worker);
             log.info("bestProfit:{}", bestProfit);
         }
+
+        // 示例：
+        //         解答失败:
+        //        测试用例:[68,35,52,47,86]
+        //            [67,17,1,81,3]
+        //            [92,10,85,84,82]
+        //        测试结果:204
+        //        期望结果:324
+        @Test
+        public void test2() {
+            int[] difficulty = {68, 35, 52, 47, 86}, profit = {67, 17, 1, 81, 3}, worker = {92, 10, 85, 84, 82};
+            Solution2 solution2 = new Solution2();
+            int[] bestProfit = solution2.maxProfitAssignment(difficulty, profit, worker);
+            log.info("bestProfit:{}", bestProfit);
+        }
     }
 }
