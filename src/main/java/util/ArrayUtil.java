@@ -22,10 +22,35 @@ public class ArrayUtil {
         return tempArray;
     }
 
+    public static int[] randomIntArray(int size, int minNum, int maxNum, boolean canLessZero) {
+        Random random = new Random();
+        int range = maxNum - minNum;
+        int[] tempArray = new int[size];
+        for (int i = 0; i < tempArray.length; i++) {
+            int tempNum = random.nextInt(range) + minNum;
+            if (canLessZero) {
+                if (Math.random() < 0.5) {
+                    tempArray[i] = -tempNum;
+                    continue;
+                }
+            }
+            tempArray[i] = tempNum;
+        }
+        return tempArray;
+    }
+
     public static int[][] randomMatrix(int rows, int cols, int minNum, int maxNum) {
         int[][] matrix = new int[rows][cols];
         for (int i = 0; i < rows; i++) {
             matrix[i] = randomIntArray(cols, minNum, maxNum);
+        }
+        return matrix;
+    }
+
+    public static int[][] randomMatrix(int rows, int cols, int minNum, int maxNum, boolean lessZero) {
+        int[][] matrix = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            matrix[i] = randomIntArray(cols, minNum, maxNum, lessZero);
         }
         return matrix;
     }
@@ -97,6 +122,34 @@ public class ArrayUtil {
         arr[leftIndex] = arr[leftIndex] ^ arr[rightIndex];
         arr[rightIndex] = arr[leftIndex] ^ arr[rightIndex];
         arr[leftIndex] = arr[leftIndex] ^ arr[rightIndex];
+    }
+
+    public static boolean sameArr(int[] arr1, int[] arr2) {
+        if (arr1 == null && arr2 == null) {
+            return true;
+        }
+        if (arr1 == null || arr2 == null) {
+            return false;
+        }
+        if (arr1.length != arr2.length) {
+            return false;
+        }
+        for (int i = 0; i < arr1.length; i++) {
+            if (arr1[i] != arr2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int sumMatrix(int[][] matrix, int startRow, int startCol, int endRow, int endCol) {
+        int sum = 0;
+        for (int row = startRow; row <= endRow; row++) {
+            for (int col = startCol; col <= endCol; col++) {
+                sum += matrix[row][col];
+            }
+        }
+        return sum;
     }
 
 }
