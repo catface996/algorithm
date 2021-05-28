@@ -32,7 +32,7 @@ import util.ArrayUtil;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 @Slf4j
-public class Solution1 {
+public class Solution2 {
 
     // 5:21 下午	info
     //				解答成功:
@@ -50,70 +50,12 @@ public class Solution1 {
     int d;
 
     /**
-     * 求各种高度的子矩阵的每列的累加和,转换成一维数组,转换成求子数组的最大累加和子数组问题.
+     * 暴力解法
      *
      * @param matrix 矩阵
      * @return
      */
     public int[] getMaxMatrix(int[][] matrix) {
-        this.rows = matrix.length;
-        this.cols = matrix[0].length;
-        max = Integer.MIN_VALUE;
-        pre = Integer.MIN_VALUE;
-        a = 0;
-        b = 0;
-        c = 0;
-        d = 0;
-        buildSum(matrix);
-        // 在各种高度的矩阵中求解,相对容易理解
-        for (int height = 1; height <= rows; height++) {
-
-            // 高度为height时,求起始结束的行号
-            int startRow = 0;
-            for (; ; startRow++) {
-                int endRow = startRow + height - 1;
-                // 根据起始结束的行号获取累加和数列
-                int[] arr = getSumArr(startRow, endRow);
-                if (arr == null) {
-                    break;
-                }
-                int startCol = 0;
-                pre = 0;
-                for (int col = 0; col < cols; col++) {
-                    pre = Math.max(pre + arr[col], arr[col]);
-                    if (pre == arr[col]) {
-                        startCol = col;
-                    }
-                    max = Math.max(max, pre);
-                    if (max == pre) {
-                        a = startRow;
-                        b = startCol;
-                        c = endRow;
-                        d = col;
-                    }
-                }
-            }
-        }
-        return new int[] {a, b, c, d};
-    }
-
-    public void buildSum(int[][] matrix) {
-        sumMatrix = new int[rows + 1][cols];
-        for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows; row++) {
-                sumMatrix[row + 1][col] = sumMatrix[row][col] + matrix[row][col];
-            }
-        }
-    }
-
-    public int[] getSumArr(int startRow, int endRow) {
-        if (endRow < rows) {
-            int[] sumArr = new int[cols];
-            for (int col = 0; col < cols; col++) {
-                sumArr[col] = sumMatrix[endRow + 1][col] - sumMatrix[startRow][col];
-            }
-            return sumArr;
-        }
         return null;
     }
 
@@ -132,7 +74,7 @@ public class Solution1 {
                 {-1, 0},
                 {0, -1},
             };
-            Solution1 solution = new Solution1();
+            Solution2 solution = new Solution2();
             int[] ans = solution.getMaxMatrix(matrix);
             log.info("ans:{}", ans);
         }
@@ -146,7 +88,7 @@ public class Solution1 {
                 {+7, +8, +9, 10, 11, +2, -2, -2},
                 {-1, +2, -1, +2, -1, -2, -1, -1},
             };
-            Solution1 solution = new Solution1();
+            Solution2 solution = new Solution2();
             int[] ans = solution.getMaxMatrix(matrix);
             log.info("ans:{}", ans);
         }
@@ -155,7 +97,7 @@ public class Solution1 {
         public void testForce() {
             for (int i = 0; i < 1000; i++) {
                 int[][] matrix = ArrayUtil.randomMatrix(10, 10, 1, 10, true);
-                Solution1 solution1 = new Solution1();
+                Solution2 solution1 = new Solution2();
                 int[] ans1 = solution1.getMaxMatrix(matrix);
                 int[] ans2 = Code03_SubMatrixMaxSum.getMaxMatrix(matrix);
                 if (solution1.max != Code03_SubMatrixMaxSum.max

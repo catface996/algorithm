@@ -39,6 +39,11 @@ public class Code03_SubMatrixMaxSum {
 	}
 
 	// 本题测试链接 : https://leetcode-cn.com/problems/max-submatrix-lcci/
+	// 5:41 下午	info
+	//				解答成功:
+	//				执行耗时:66 ms,击败了34.97% 的Java用户
+	//				内存消耗:42.7 MB,击败了60.84% 的Java用户
+
 	public static int[] getMaxMatrix(int[][] m) {
 		int N = m.length;
 		int M = m[0].length;
