@@ -62,6 +62,13 @@ class Solution2 {
             return 0;
         }
         int[] d = new int[n + 1];
+        // d[i] 代表,长度为i的所有递增子序列中,结尾最小的数字,自然长度越大,数字越大
+        // 举例, 10,9,1,2,3,4,5 对应的d[]={x,1,2,3,4,5}
+        // 过程为 :
+        // 第一步: 10 d[1] = 10;
+        // 第二步: 9 d[1] = 9;
+        // 第三步: 1 d[1] = 1;
+        // 第.步: n d[n] = n;
         d[len] = nums[0];
         for (int i = 1; i < n; ++i) {
             int curValue = nums[i];
@@ -69,6 +76,7 @@ class Solution2 {
                 d[++len] = curValue;
             } else {
                 int l = 1, r = len, pos = 0;
+                // TODO 为什么要用二分,单调性才是关键
                 // 如果找不到说明所有的数都比 curValue 大，此时要更新 d[1]，所以这里将 pos 设为 0
                 while (l <= r) {
                     int mid = (l + r) >> 1;
