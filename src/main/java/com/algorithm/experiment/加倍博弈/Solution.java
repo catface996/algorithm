@@ -21,15 +21,16 @@ public class Solution {
      * @return 赢得的金额
      */
     public int winMoney(int times) {
+        int minBetNum = 10;
         int winMoney = 0;
-        int betMoney = 1;
+        int betMoney = minBetNum;
         for (int i = 0; i < times; i++) {
             if (Double.compare(Math.random(), 0.5) <= 0) {
                 winMoney -= betMoney;
                 betMoney = betMoney << 1;
             } else {
                 winMoney += betMoney;
-                betMoney = 1;
+                betMoney = minBetNum;
             }
         }
         return winMoney;
