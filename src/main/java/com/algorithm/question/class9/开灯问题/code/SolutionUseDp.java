@@ -77,11 +77,11 @@ public class SolutionUseDp {
         @Test
         public void testForce() {
             for (int i = 0; i < 100; i++) {
-                int[] lights = randomLight(10);
+                int[] lights = randomLight(100);
                 int[] lights1 = ArrayUtil.clone(lights);
                 int[] lights2 = ArrayUtil.clone(lights);
                 int minPressNum1 = SolutionUseDp.minPress(lights1);
-                int minPressNum2 = Code01_LightProblem.noLoopRight(lights2);
+                int minPressNum2 = Code01_LightProblem.noLoopMinStep1(lights2);
                 if (minPressNum1 != minPressNum2) {
                     log.info("ans1:{},ans2:{},lights:{}", minPressNum1, minPressNum2, lights);
                 }

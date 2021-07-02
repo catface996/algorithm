@@ -74,7 +74,7 @@ public class Solution {
         @Test
         public void testForce() {
             for (int i = 0; i < 100; i++) {
-                int[] lights = randomLight(10);
+                int[] lights = randomLight(30);
                 int[] lights1 = ArrayUtil.clone(lights);
                 int[] lights2 = ArrayUtil.clone(lights);
                 int minPressNum1 = Solution.minPress(lights1);
