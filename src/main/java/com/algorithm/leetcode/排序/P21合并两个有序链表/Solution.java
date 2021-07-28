@@ -44,8 +44,33 @@ package com.algorithm.leetcode.排序.P21合并两个有序链表;
  * this.val = val; } ListNode(int val, ListNode next) { this.val = val; this.next = next; } }
  */
 class Solution {
+
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        return null;
+        ListNode cur1 = l1;
+        ListNode cur2 = l2;
+        ListNode ans = new ListNode();
+        ListNode tail = ans;
+        while (cur1 != null && cur2 != null) {
+            if (cur1.val <= cur2.val) {
+                tail.next = cur1;
+                cur1 = cur1.next;
+            } else {
+                tail.next = cur2;
+                cur2 = cur2.next;
+            }
+            tail = tail.next;
+        }
+        while (cur1 != null) {
+            tail.next = cur1;
+            cur1 = cur1.next;
+            tail = tail.next;
+        }
+        while (cur2 != null) {
+            tail.next = cur2;
+            cur2 = cur2.next;
+            tail = tail.next;
+        }
+        return ans.next;
     }
 
     public class ListNode {
