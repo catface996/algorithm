@@ -59,12 +59,19 @@ class Solution {
 
     private int[] next(String needle){
         int[] next = new int[needle.length()];
-        next[0]= -1;
-        int cur = 1;
-        while (cur<needle.length()){
-
+        next[0] = -1;
+        int cur = 0;
+        int i = 1;
+        while (i < needle.length()) {
+            if (needle.charAt(cur + 1) == needle.charAt(i)) {
+                next[i++] = ++cur;
+            } else if (next[cur] != -1) {
+                cur = next[cur];
+            } else {
+                i++;
+            }
         }
-        return null;
+        return next;
     }
 
 
