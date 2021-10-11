@@ -80,15 +80,29 @@ public class Dijkstra1 {
         return minNode;
     }
 
+    /**
+     * 打印迪杰斯特拉算法的计算结果
+     *
+     * @param from 出发点
+     * @param cost 达到各节点的代价
+     */
+    private void printResult(Node from, Map<Node, Integer> cost) {
+        System.out.println("Dijkstra Result **************************");
+        for (Node targetNode : cost.keySet()) {
+            System.out.println("from " + from.value + " to " + targetNode.value + " cost " + cost.get(targetNode));
+        }
+    }
+
     public static class TestClass {
         @Test
         public void test1() {
             int[][] matrix = GraphGenerator.buildMatrix();
             Graph graph = GraphGenerator.createGraph(matrix);
+            graph.print();
             Dijkstra1 dijkstra1 = new Dijkstra1();
             for (Node node : graph.nodes.values()) {
                 Map<Node, Integer> distanceMap = dijkstra1.dijkstra(node);
-                System.out.println("xx");
+                dijkstra1.printResult(node, distanceMap);
                 break;
             }
         }
