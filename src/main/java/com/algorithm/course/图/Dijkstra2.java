@@ -1,14 +1,14 @@
 package com.algorithm.course.图;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.algorithm.course.图.Dijkstra2.NodeHeap.NodeRecord;
 import com.algorithm.course.图.structure.Edge;
 import com.algorithm.course.图.structure.Graph;
 import com.algorithm.course.图.structure.GraphGenerator;
 import com.algorithm.course.图.structure.Node;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author by catface
@@ -150,4 +150,6 @@ public class Dijkstra2 {
             System.out.println("");
         }
     }
+
+
 }

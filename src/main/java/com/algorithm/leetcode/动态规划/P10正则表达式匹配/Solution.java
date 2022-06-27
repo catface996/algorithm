@@ -53,7 +53,16 @@ package com.algorithm.leetcode.动态规划.P10正则表达式匹配;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 public class Solution {
+    /**
+     * 思路: 递归,动态规划
+     *
+     * @param s 源串
+     * @param p 模式串
+     * @return
+     */
     public boolean isMatch(String s, String p) {
+        // 首先获得模式串的开头字符,如果不是"."和"*",则检查是否与s的首个字符一致,如果一致,继续,否则返回false
+        // 如果p的首个字符是"."
         return false;
     }
 }
