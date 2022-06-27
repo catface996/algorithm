@@ -2,7 +2,7 @@ package com.algorithm.leetcode.排序.P4寻找两个正序数组的中位数;
 
 import org.junit.Test;
 
-public class Solution {
+public class Solution2 {
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         if (nums1.length == 0 && nums2.length == 0) {
@@ -19,7 +19,7 @@ public class Solution {
     }
 
     /**
-     * 获取数组1和数组2中第k大的值 #二分 #递归
+     * 获取数组1和数组2中第k大的值
      *
      * @param nums1 数组1
      * @param nums2 数组2
@@ -35,6 +35,8 @@ public class Solution {
     }
 
     /**
+     * 查找数组1和数组2中的第k大的值  #二分 #迭代
+     *
      * @param nums1  数组1
      * @param nums2  数组2
      * @param left1  数组1的开始下标
@@ -45,23 +47,35 @@ public class Solution {
      * @return 第k大的值
      */
     public int findTheK(int[] nums1, int[] nums2, int left1, int right1, int left2, int right2, int k) {
-        if (left1 > right1) {
-            return nums2[left2 + k - 1];
+        int l1 = left1;
+        int l2 = left2;
+        int curK = k;
+        int mk, m1, m2;
+        while (true) {
+            if (l1 > right1) {
+                return nums2[l2 + curK - 1];
+            }
+            if (l2 > right2) {
+                return nums1[l1 + curK - 1];
+            }
+            if (curK == 1) {
+                return Math.min(nums1[l1], nums2[l2]);
+            }
+            // 计算 k/2 - 1 个
+            mk = curK / 2;
+            m1 = Math.min(l1 + mk - 1, nums1.length - 1);
+            m2 = Math.min(l2 + mk - 1, nums2.length - 1);
+            if (nums1[m1] <= nums2[m2]) {
+                curK = curK - (m1 - l1 + 1);
+                l1 = m1 + 1;
+                //return findTheK(nums1, nums2, m1 + 1, right1, left2, right2, k - (m1 - left1 + 1));
+            } else {
+                curK = curK - (m2 - l2 + 1);
+                l2 = m2 + 1;
+                //return findTheK(nums1, nums2, left1, right1, m2 + 1, right2, k - (m2 - left2 + 1));
+            }
         }
-        if (left2 > right2) {
-            return nums1[left1 + k - 1];
-        }
-        if (k == 1) {
-            return Math.min(nums1[left1], nums2[left2]);
-        }
-        // 计算 k/2 - 1 个
-        int mk = k / 2;
-        int m1 = Math.min(left1 + mk - 1, nums1.length - 1);
-        int m2 = Math.min(left2 + mk - 1, nums2.length - 1);
-        if (nums1[m1] <= nums2[m2]) {
-            return findTheK(nums1, nums2, m1 + 1, right1, left2, right2, k - (m1 - left1 + 1));
-        }
-        return findTheK(nums1, nums2, left1, right1, m2 + 1, right2, k - (m2 - left2 + 1));
+
     }
 
 
@@ -69,7 +83,7 @@ public class Solution {
     public void test_findK() {
         int[] nums1 = new int[]{2, 2, 4, 4};
         int[] nums2 = new int[]{2, 2, 4, 4};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         Integer ans;
         ans = solution.findTheK(nums1, nums2, 1);
         System.out.println(ans);
@@ -95,7 +109,7 @@ public class Solution {
     public void test_findTheK() {
         int[] nums1 = new int[]{1, 3};
         int[] nums2 = new int[]{2};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         Integer ans;
         ans = solution.findTheK(nums1, nums2, 1);
         System.out.println(ans);
@@ -111,7 +125,7 @@ public class Solution {
     public void test_findTheK4() {
         int[] nums1 = new int[]{1};
         int[] nums2 = new int[]{2, 3, 4, 5, 6};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         Integer ans;
         ans = solution.findTheK(nums1, nums2, 3);
         System.out.println(ans);
@@ -132,7 +146,7 @@ public class Solution {
     public void test_1() {
         int[] nums1 = new int[]{1, 3};
         int[] nums2 = new int[]{2};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         double ans = solution.findMedianSortedArrays(nums1, nums2);
         System.out.println(ans);
     }
@@ -150,7 +164,7 @@ public class Solution {
     public void test_2() {
         int[] nums1 = new int[]{1, 2};
         int[] nums2 = new int[]{3, 4};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         double ans = solution.findMedianSortedArrays(nums1, nums2);
         System.out.println(ans);
     }
@@ -168,7 +182,7 @@ public class Solution {
     public void test_3() {
         int[] nums1 = new int[]{};
         int[] nums2 = new int[]{3, 4};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         double ans = solution.findMedianSortedArrays(nums1, nums2);
         System.out.println(ans);
     }
@@ -186,7 +200,7 @@ public class Solution {
     public void test_4() {
         int[] nums1 = new int[]{1, 2};
         int[] nums2 = new int[]{};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         double ans = solution.findMedianSortedArrays(nums1, nums2);
         System.out.println(ans);
     }
@@ -204,7 +218,7 @@ public class Solution {
     public void test_5() {
         int[] nums1 = new int[]{};
         int[] nums2 = new int[]{};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         double ans = solution.findMedianSortedArrays(nums1, nums2);
         System.out.println(ans);
     }
@@ -221,7 +235,7 @@ public class Solution {
     public void test_6() {
         int[] nums1 = new int[]{2, 2, 4, 4};
         int[] nums2 = new int[]{2, 2, 4, 4};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         double ans = solution.findMedianSortedArrays(nums1, nums2);
         System.out.println(ans);
     }
@@ -237,7 +251,7 @@ public class Solution {
     public void test_7() {
         int[] nums1 = new int[]{1};
         int[] nums2 = new int[]{2, 3, 4, 5, 6};
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         double ans = solution.findMedianSortedArrays(nums1, nums2);
         System.out.println(ans);
     }
