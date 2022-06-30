@@ -54,7 +54,7 @@ import org.junit.Test;
 // Related Topics 递归 字符串 动态规划 👍 2748 👎 0
 
 //leetcode submit region begin(Prohibit modification and deletion)
-public class Solution {
+public class Solution2 {
     /**
      * 思路: 递归,动态规划
      *
@@ -63,7 +63,23 @@ public class Solution {
      * @return true 符合,否则不符合
      */
     public boolean isMatch(String s, String p) {
-        return isMatch(s, p, 0, 0);
+        boolean[][] ansMap = new boolean[s.length() + 1][p.length() + 2];
+        // s和p均在最后一个匹配成功,说明匹配
+        ansMap[s.length()][p.length()] = true;
+        int pCur = p.length() - 1;
+        // s已经匹配结束,p陪最后一位,或者倒数第二位,且最后一位是*,可以匹配
+        // 如果倒数第1位,第3位,第5位,依次类推均为*,则第均可以匹配
+        while (pCur >= 1 && p.charAt(pCur) == '*') {
+            ansMap[s.length()][pCur] = true;
+            ansMap[s.length()][pCur - 1] = true;
+            pCur -= 2;
+        }
+        for (int sCur = s.length() - 1; sCur >= 0; sCur--) {
+            for (pCur = p.length() - 1; pCur >= 0; pCur--) {
+                ansMap[sCur][pCur] = isMatch(s, p, sCur, pCur, ansMap);
+            }
+        }
+        return ansMap[0][0];
     }
 
     /**
@@ -74,7 +90,7 @@ public class Solution {
      * @param sCur 子串当前要匹配的位置
      * @return ture, 当前位置匹配
      */
-    public boolean isMatch(String s, String p, int sCur, int pCur) {
+    public boolean isMatch(String s, String p, int sCur, int pCur, boolean[][] ansMap) {
         // 当sCur超过s串的长度,一定是匹配事变
         if (sCur > s.length()) {
             return false;
@@ -90,13 +106,16 @@ public class Solution {
             return false;
         }
 
+        boolean ans = false;
+
         // 首先要决策当前的pCur字符要不要比较,决定因素是看下一个字符是不是*
         // 如果是*,可以合并成0个字符,所以不需要比较
         // 如果不是*,一定要比较
 
         // 下一个字符是'*',可以跳过当前字符和下一个字符,直接与pCur+2个字符进行比较
         if (pCur + 1 < p.length() && p.charAt(pCur + 1) == '*') {
-            if (isMatch(s, p, sCur, pCur + 2)) {
+            ans = ansMap[sCur][pCur + 2];
+            if (ans) {
                 return true;
             }
         }
@@ -110,8 +129,9 @@ public class Solution {
         if (p.charAt(pCur) == '*') {
 
             //与之前的元素合并为1个,即忽略当前的*,直接与p的下一个字符比对
-            if (isMatch(s, p, sCur, pCur + 1)) {
-                return true;
+            ans = ansMap[sCur][pCur + 1];
+            if (ans) {
+                return ans;
             }
 
             // 与之前的元素合并为多个
@@ -122,21 +142,21 @@ public class Solution {
 
             // 在*代表多个之前的字符的情况下,有两种选择
             // 1.p串停留在pCur处继续与s的sCur+1继续进行匹配(此时要求s的sCur+1与sCur相等方可,此处不判断,在下一次递归中会进行判断)
-            if (isMatch(s, p, sCur + 1, pCur)) {
-                return true;
+            ans = ansMap[sCur + 1][pCur];
+            if (ans) {
+                return ans;
             }
 
             // 2.p串继续向右,在pCur+1处于sCur+1处进行匹配
-            return isMatch(s, p, sCur + 1, pCur + 1);
+            return ansMap[sCur + 1][pCur + 1];
         }
 
 
         // 当前的pCur不是*,是字母或者.
         // 如果s串的当前字母和p串的当前字母相等,则是否匹配需要考虑的是剩余的串是否匹配
         if ((sCur < s.length() && s.charAt(sCur) == p.charAt(pCur)) || p.charAt(pCur) == '.') {
-            return isMatch(s, p, sCur + 1, pCur + 1);
+            return ansMap[sCur + 1][pCur + 1];
         }
-
         return false;
     }
 
@@ -151,7 +171,7 @@ public class Solution {
      */
     @Test
     public void test1() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aa";
         String p = "a";
         boolean ans = solution.isMatch(s, p);
@@ -169,7 +189,7 @@ public class Solution {
      */
     @Test
     public void test2() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aa";
         String p = "a*";
         boolean ans = solution.isMatch(s, p);
@@ -188,7 +208,7 @@ public class Solution {
      */
     @Test
     public void test3() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aa";
         String p = ".*";
         boolean ans = solution.isMatch(s, p);
@@ -207,7 +227,7 @@ public class Solution {
      */
     @Test
     public void test4() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aaaa";
         String p = "a.*";
         boolean ans = solution.isMatch(s, p);
@@ -226,7 +246,7 @@ public class Solution {
      */
     @Test
     public void test5() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aaaa";
         String p = "aa.*";
         boolean ans = solution.isMatch(s, p);
@@ -245,7 +265,7 @@ public class Solution {
      */
     @Test
     public void test6() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aaaa";
         String p = "aaab.*";
         boolean ans = solution.isMatch(s, p);
@@ -264,7 +284,7 @@ public class Solution {
      */
     @Test
     public void test7() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aaac";
         String p = "aaab.*";
         boolean ans = solution.isMatch(s, p);
@@ -281,7 +301,7 @@ public class Solution {
      */
     @Test
     public void test8() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "ab";
         String p = ".*";
         boolean ans = solution.isMatch(s, p);
@@ -299,7 +319,7 @@ public class Solution {
      */
     @Test
     public void test9() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "ab";
         String p = ".*c";
         boolean ans = solution.isMatch(s, p);
@@ -317,7 +337,7 @@ public class Solution {
      */
     @Test
     public void test10() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aaa";
         String p = "aaaa";
         boolean ans = solution.isMatch(s, p);
@@ -335,7 +355,7 @@ public class Solution {
      */
     @Test
     public void test11() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aab";
         String p = "c*a*b";
         boolean ans = solution.isMatch(s, p);
@@ -353,7 +373,7 @@ public class Solution {
      */
     @Test
     public void test12() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aaa";
         String p = "ab*ac*a";
         boolean ans = solution.isMatch(s, p);
@@ -371,7 +391,7 @@ public class Solution {
      */
     @Test
     public void test13() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "aaa";
         String p = "ab*a*c*a";
         boolean ans = solution.isMatch(s, p);
@@ -389,7 +409,7 @@ public class Solution {
      */
     @Test
     public void test14() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "bbbba";
         String p = ".*a*a";
         boolean ans = solution.isMatch(s, p);
@@ -407,7 +427,7 @@ public class Solution {
      */
     @Test
     public void test15() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "a";
         String p = "ab*";
         boolean ans = solution.isMatch(s, p);
@@ -425,7 +445,7 @@ public class Solution {
      */
     @Test
     public void test16() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "a";
         String p = ".*";
         boolean ans = solution.isMatch(s, p);
@@ -443,7 +463,7 @@ public class Solution {
      */
     @Test
     public void test17() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "abcaaaaaaabaabcabac";
         String p = ".*ab.a.*a*a*.*b*b*";
         boolean ans = solution.isMatch(s, p);
@@ -457,7 +477,7 @@ public class Solution {
      */
     @Test
     public void test18() {
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         String s = "acaabbaccbbacaabbbb";
         String p = "a*.*b*.*a*aa*a*";
         boolean ans = solution.isMatch(s, p);
