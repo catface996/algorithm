@@ -78,12 +78,15 @@ public class Solution7 {
     public boolean isMatch(String s, String p, int sRight, int pRight) {
         // 当p串已经匹配结束时,如果s串也匹配结束,表示两串匹配
         if (pRight <= -1) {
-            return sRight <= -1;
+            return sRight == -1;
         }
         // p串未匹配结束,继续匹配p串
         switch (p.charAt(pRight)) {
             case '.':
                 // 1.当pRight处是'.'时,sRight处是任意字符均匹配,除非sRight处不存在
+                if (sRight < 0) {
+                    return false;
+                }
                 return isMatch(s, p, sRight - 1, pRight - 1);
             // 2.当pRight处是'*'时,有以下两种情况
             case '*':
@@ -435,6 +438,24 @@ public class Solution7 {
         Solution7 solution = new Solution7();
         String s = "acaabbaccbbacaabbbb";
         String p = "a*.*b*.*a*aa*a*";
+        boolean ans = solution.isMatch(s, p);
+        System.out.println(ans);
+        assert !ans;
+    }
+
+    /**
+     * 解答失败:
+     * 测试用例:"a"
+     * ".*..a*"
+     * 测试结果:true
+     * 期望结果:false
+     * stdout:
+     */
+    @Test
+    public void test19() {
+        Solution7 solution = new Solution7();
+        String s = "a";
+        String p = ".*..a*";
         boolean ans = solution.isMatch(s, p);
         System.out.println(ans);
         assert !ans;
